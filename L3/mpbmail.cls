@@ -1,15 +1,14 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{mpbmail}
 
+\PassOptionsToClass{options, foldmarks=true,foldmarks=blmtP,fromalign=left,fromrule=afteraddress,fromlogo,fromphone,fromemail,version=last}{scrlttr2}
 \newif\if@french
 \DeclareOption{french}{\@frenchtrue}
 
-\newif\if@english
-\DeclareOption{english}{\@englishtrue}
+\newif\if@british
+\DeclareOption{british}{\@britishtrue}
 
 \ProcessOptions
-
-\PassOptionsToClass{foldmarks=true,foldmarks=blmtP,fromalign=center,fromrule=afteraddress,fromphone,fromemail,version=last}{scrlttr2}
 
 \LoadClass{scrlttr2}
 
@@ -19,14 +18,14 @@
 \setkomavar{fromname}[Expéditeur : ]{Matthieu Boyer}
 \fi
 
-\if@english
+\if@british
 \usepackage[british]{babel}
 \setkomavar{fromname}[Sender : ]{Matthieu Boyer}
 \fi
-
+\usepackage{graphicx}
 \setkomavar{fromaddress}{4 Rue Commandant Marchand \\
 69003 Lyon}
 \setkomavar{fromemail}{matthieu.boyer@ens.psl.eu}
-\setkomavar{fromphone}{+33 6 13 68 72 59}
-
+\setkomavar{fromphone}{+33\,6\,13\,68\,72\,59}
+\setkomavar{fromlogo}{\includegraphics[scale = .16]{concentric-rinds}}
 
