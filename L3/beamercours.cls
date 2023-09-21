@@ -7,7 +7,6 @@
 \RequirePackage[french]{babel}
 \RequirePackage{texnames}
 \RequirePackage{array}
-\RequirePackage{lmodern}
 \RequirePackage{tikz}
 \RequirePackage{booktabs}
 \RequirePackage{textcomp}
@@ -36,6 +35,7 @@
 
 \newcommand{\latex}[1][]{\lstinline[language={[LaTeX]TeX},emph={#1}]}
 \lstnewenvironment{latexblock}[1][]{\lstset{columns=flexible,language=[LaTeX]TeX,emph={#1}}}{}
+\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}#1}}
 
 \ifdefined\beamerboxesrounded
 \definecolor{mygray}{gray}{0.90}
