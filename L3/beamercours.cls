@@ -1,3 +1,4 @@
+\NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{beamercours}
 
 \LoadClassWithOptions{beamer}
@@ -18,8 +19,12 @@
 
 \newenvironment{attention}{\begin{tabular}{m{.1\linewidth}m{.8\linewidth}}\includegraphics[width=\linewidth]{attention}&}{\end{tabular}}
 
+\usefonttheme[onlymath]{serif}
+\RequirePackage{setspace}
+\setstretch{1.2}
+
 \mode<presentation>
-\usetheme{Singapore}
+\usetheme{Dresden}
 
 % \AtBeginSection[]{\begin{frame}{Plan}\tableofcontents[subsectionstyle=shaded/hide,sectionstyle=show/shaded]\end{frame}}
 
@@ -35,7 +40,7 @@
 
 \newcommand{\latex}[1][]{\lstinline[language={[LaTeX]TeX},emph={#1}]}
 \lstnewenvironment{latexblock}[1][]{\lstset{columns=flexible,language=[LaTeX]TeX,emph={#1}}}{}
-\newcommand{\deriv}[1]{\frac{\mathrm{d}}{\mathrm{d}#1}}
+\newcommand{\deriv}[2]{\frac{\mathrm{d}}{\mathrm{d}#1}\!\left(#2\right)}
 
 \ifdefined\beamerboxesrounded
 \definecolor{mygray}{gray}{0.90}
