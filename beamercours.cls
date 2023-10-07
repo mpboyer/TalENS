@@ -31,7 +31,7 @@
 \AtBeginSubsection[]{\begin{frame}{Plan}\tableofcontents[subsectionstyle=show/shaded/hide,sectionstyle=show/shaded]\end{frame}}
 
 \author{Matthieu Boyer}
-\institute{\includegraphics[height=6em]{ens_psl}}
+%\institute{\includegraphics[height=6em]{ens_psl}}
 
 \setbeamertemplate{navigation symbols}{}
 
