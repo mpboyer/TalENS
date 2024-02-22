@@ -16,6 +16,8 @@
 \RequirePackage{amsmath, amsthm, amssymb}
 \RequirePackage{multirow}
 \RequirePackage{stmaryrd}
+\RequirePackage{nicematrix}
+\RequirePackage{makecell}
 \RequirePackage{listings}
 \RequirePackage{algorithm}
 \RequirePackage{algpseudocode}
@@ -30,9 +32,9 @@
 \usetheme{Dresden}
 
 
-% \AtBeginSection[]{\begin{frame}{Plan}\tableofcontents[subsectionstyle=show/shaded/hide,sectionstyle=show/shaded]\end{frame}}
+\AtBeginSection[]{\begin{frame}{Plan}\tableofcontents[subsectionstyle=show/shaded/hide,sectionstyle=show/shaded]\end{frame}}
 
-\AtBeginSubsection[]{\begin{frame}{Plan}\tableofcontents[subsectionstyle=show/shaded/hide,sectionstyle=show/shaded]\end{frame}}
+%\AtBeginSubsection[]{\begin{frame}{Plan}\tableofcontents[subsectionstyle=show/shaded/hide,sectionstyle=show/shaded]\end{frame}}
 
 \author{Matthieu Boyer}
 % \institute{\includegraphics[height=3em]{ens_psl}}
@@ -85,6 +87,7 @@
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\mL}{\mathcal{L}}
 \newcommand{\ml}{\mathcal{l}}
+\newcommand{\mP}{\mathcal{P}}
 
 \renewcommand{\P}{\mathbb{P}}
 \renewcommand{\d}{{\rm \, d}}
@@ -108,7 +111,7 @@
 \DeclareMathOperator{\ch}{ch}
 \DeclareMathOperator{\sh}{sh}
 \renewcommand{\th}{\mathop{\rm th}}
-
+\DeclareMathOperator{\Vect}{Vect}
 
 %Macros
 \newcommand{\applic}[4]{\begin{array}[t]{rcl}
@@ -140,6 +143,7 @@
 \setbeamercolor{subsection in head/foot}{fg = yulm}
 \setbeamercolor{background canvas}{bg = yulm!10}
 
+\usetikzlibrary{decorations.pathreplacing,calligraphy}
 \usetikzlibrary{automata, arrows, calc, matrix, positioning}
 \usetikzlibrary{math}
 \definecolor{vulm}{HTML}{7d1dd3}
