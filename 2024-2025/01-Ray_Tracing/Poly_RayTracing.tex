@@ -8,6 +8,10 @@
 \tikzstyle{verre} = [draw = v, fill = v!30]
 \usetikzlibrary{decorations}
 
+\newcommand{\point}[3]{\draw (#1 -.1, #2 -.1) -- (#1 + .1, #2 + .1);
+\draw (#1 +.1, #2 -.1) -- (#1 - .1, #2 + .1);
+\draw (#1, #2) node[below right]{#3};}
+
 \renewcommand*{\K}{\mathbb{K}}
 \graphicspath{{./Images/}}
 
@@ -52,7 +56,7 @@ On définit l'indice optique $n$ de la manière suivante
 \begin{equation*}
 	n=\frac{c}{v_\varphi}
 \end{equation*}
-où $c =\unit{299~792~458}{\meter\cdot\second^{-1}}$ et $v_\varphi$ est la vitesse de propagation de la lumière dans notre milieu.
+où $c =\unit{299~792~458}{\meter\cdot\second^{-1}}$ est la vitesse de la lumière dans le vide et $v_\varphi$ est la vitesse de propagation de la lumière dans notre milieu.
 \end{définition}
 \begin{example}
 	L'indice optique du vide vaut $1$, celui de l'air $1.0003$, celui de l'eau $1.33$ et le verre autour de $1.5$.
@@ -87,18 +91,25 @@ L'avantage : on peut se restreindre à un nombre de rayons plus limité, en ne p
 \subsection{Comment prédire la trajectoire de la lumière ?}
 Une règle fondamentale permet de prédire la trajectoire de la lumière :
 \begin{théorème}{Principe de Fermat}{}
-La lumière se propage en minimisant son temps de parcours
+La lumière se propage en minimisant son temps de parcours.
 \end{théorème}
+\begin{remarque}{}{}
+Ce principe n'est pas exclusif à la lumière, et par exemple est aussi vrai pour le son (et généralement tout comportement ondulatoire) : on peut donc faire des équivalents de ray tracing sur du son ou autres.
+\end{remarque}{}{}
 En notant une distance $AB$, on a :
 \begin{equation*}
 	\Delta t = \frac{AB}{v_\varphi} = \frac{nAB}{c}
 \end{equation*}
 On note $(AB) = nAB$ le chemin optique. Le principe de Fermat s'écrit de manière équivalente en la minimisation du chemin optique.\\
+\begin{remarque}{}{}
+	Dans un milieu d'indice constant, la minimisation du chemin optique est équivalente à celle de la distance entre deux points. On sait que le chemin le plus court entre deux points est la ligne droite : on retrouve que dans un MTHI, les rayons lumineux sont des droites.
+\end{remarque}
 Ce principe permet d'intuiter les lois dites de Snell-Descartes :
 \begin{théorème}{Lois de Snell-Descartes}{}
-Un rayon de lumière entrant depuis un milieu $1$ d'indice optique $n_{1}$ dans un milieu $n_{2}$ avec un angle à la normale $i_{1}$ est réfléchi et réfracté selon les lois suivantes:
+À l'interface entre deux milieux d'indice optique $n_1$ et $n_2$, la propagation d'un rayon lumineux en provenance du milieu $1$ se fait selon les lois suivantes :
 \begin{itemize}
-    \item \color{vulm}{Réfraction :}\ \color{black} Son angle $i_{2}$ de sortie dans le milieu $2$ vérifie \[n_{1}\sin{\left(i_{1}\right)} = n_{2}\sin{\left(i_{2}\right)}\]
+	\item\color{vulm}{Plan d'incidence :}\ \color{black} Il existe un rayon réfléchi (qui reste dans le milieu $1$) et un rayon réfracté (qui se propage dans le milieu $2$) qui sont tous les deux situés dans le plan formé par le rayon incident et la normale au dioptre.
+	\item \color{vulm}{Réfraction :}\ \color{black} L'angle $i_{2}$ de sortie dans le milieu $2$ vérifie \[n_{1}\sin{\left(i_{1}\right)} = n_{2}\sin{\left(i_{2}\right)}\]
     \item \color{vulm}{Réflexion :}\ \color{black} Son angle $i_{1}'$ de réflexion dans le milieu $1$ est tel que la normale au milieu au point d'incidence est la bissectrice de l'angle $i_{1} + i_{1}'$.
 \end{itemize}
 \end{théorème}
@@ -121,7 +132,8 @@ Un rayon de lumière entrant depuis un milieu $1$ d'indice optique $n_{1}$ dans 
         \draw[vulm](4,2,-2)--++(0,0,4)--++(-4,0,0)--++(0,0,-4)--cycle;
         \draw[vulm] (4,2,-2) node[rotate=45,below right]{\small \hspace{10pt}Plan d'Incidence};
         \draw[dashed, vulm] (A) ++(2,0,0)--++(-4, 0, 0) ;
-        \draw[->,thick,postaction={decorate},red] (4,2,1.5)--(A)--(0.4,2,-2);
+        \draw[->,thick,postaction={decorate},red] (4,2,1.5)--(A);
+        \draw[->,thick,postaction={decorate},red] (A)--(0.4,2,-2);
         \draw[dashed, vulm, ->] (B)--++(0,0,4.5)node[below left, fill = none]{\small Normale};%la normale
         \draw[vulm] (2,2,0.5) to[bend right, vulm] (2.65,2,0.5);
         \draw (2.55,2,0.8) node[vulm]{$i_{1}$};
@@ -151,7 +163,8 @@ Un rayon de lumière entrant depuis un milieu $1$ d'indice optique $n_{1}$ dans 
         \draw[vulm](4,2,-2)--++(0,0,4)--++(-4,0,0)--++(0,0,-4)--cycle;
         \draw[vulm] (4,2,-2) node[rotate=45,below right]{\small Plan d'Incidence};
         \draw[dashed, vulm] (A) ++(2,0,0)--++(-4, 0, 0) ;
-        \draw[->,thick,postaction={decorate},red] (4,2,1.5)--(A)--(0,2,1.5);
+        \draw[->,thick,postaction={decorate},red] (4,2,1.5)--(A);
+        \draw[->,thick,postaction={decorate},red] (A)--(0,2,1.5);
         \draw[dashed, vulm, ->] (B)--++(0,0,4.5)node[above,fill=none]{\small Normale\hspace{12pt}};%la normale
         \draw[vulm] (2,2,0.5) to[bend right] (2.65,2,0.5);
         \draw (2.55,2,0.8) node[vulm]{$i_{1}$};
@@ -161,5 +174,46 @@ Un rayon de lumière entrant depuis un milieu $1$ d'indice optique $n_{1}$ dans 
         \draw (2,0,-1) node[vulm]{Indice $n_{2}$};
     \end{tikzpicture}
 \end{tabular}
+
+\begin{proof}
+\begin{itemize}
+	\item \color{vulm}{Plan d'incidence :}\ \color{black} Soient deux points dans le plan d'incidence. Pour le cas de la réfraction, le rayon de Snell-Descartes minimise la durée de parcours totale comparé à un rayon qui ne serait pas dans le plan d'incidence. Pour la réflexion, c'est la même chose sauf qu'on a comme contrainte que le rayon passe par le dioptre.
+	\item \color{vulm}{Réflexion :}\ \color{black} On sait que nos rayons sont dans le plan d'incidence. On doit minimiser la distance entre deux points $A$ et $B$ avec comme condition le fait qu'on passe par le dioptre :
+	\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\draw[vulm] (-2, -2) -- (-2, 2) -- (2, 2) -- (2, -2) -- cycle;
+		\draw (0, 2) node[above]{Plan d'incidence};
+		\point{-1}{1}{$A$};
+		\point{1}{1.5}{$B$};
+		\point{-.4}{0}{$D$};
+		\draw[->] (0, .2) -- (-.4, .2);
+		\draw (-.2, .2) node[above]{$x$};
+		\draw[->] (-1, 0)  -- (-1, 1);
+		\draw (-1, .5) node[left]{$d_1$};
+		\draw[->] (1, 0)  -- (1, 1.5);
+		\draw (1, .75) node[right]{$d_2$};
+		\draw[->, red, thick] (-1, 1) -- (-.7, .5);
+		\draw[->, red, thick] (-.7, .5) -- (-.4, 0);
+		\draw[->, red, thick] (-.4, 0) -- (0.3, .75) -- (1, 1.5);
+		\draw[->, red, thick] (0.3, .75) -- (1, 1.5);
+		\draw[<->] (-1, -.5) -- (0, -.5);
+		\draw (-.5, -.5) node[below]{$d_3$};
+		\draw[<->] (1, -.5) -- (0, -.5);
+		\draw (.5, -.5) node[below]{$d_4$};
+		\draw[dashed, vulm] (-2.5, 0) -- (2.5, 0);
+		\draw[dashed, vulm] (0, -2.5) -- (0, 2.5);
+	\end{tikzpicture}
+	\end{figure}
+	\noindent On doit donc minimiser (étant donné que l'indice optique est constant, minimiser le temps revient à minimiser la distance)
+	\begin{equation*}
+	d(x) = \sqrt{d_1^2+(d_3+x)^2} + \sqrt{d_2^2+(d_4-x)^2}
+	\end{equation*}
+	En dérivant et cherchant les extrema (on annule la dérivée), on trouve que $i_1$ = $i'_1$
+	\item \color{vulm}{Réfraction :}\ \color{black} Principe analogue à la réflexion.
+	
+\end{itemize}
+\end{proof}
+Nous avons à présent un moyen de prédire la trajectoire des rayons lumineux à l'aide de la connaissance des indices optiques.
 
 \end{document}
