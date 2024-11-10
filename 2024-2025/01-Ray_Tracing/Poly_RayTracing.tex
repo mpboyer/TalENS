@@ -1,5 +1,5 @@
 \documentclass{classe}
-\title{Ray Tracing\\ \small Cours TalENS n°1}
+\title{Imagerie 3D --- Ray Tracing\\ \small Cours TalENS n°1}
 \author{Matthieu Boyer \& Clément Allard}
 \date{16 Novembre 2024}
 
@@ -19,7 +19,7 @@
 \section{Faire briller une vache de mille feux ?}
 \subsection{Introduction}
 \subsection{La lumière, kéazko ?}
-Qu'est ce que la lumière ? Comment se propage-t-elle ? Voilà un débat qui a enflammé les derniers siècles. La conclusion de ces débats fut que la lumière se comporte comme à la fois un ensemble de photons mais également comme un onde (phénomène mis en évidence par Louis De Broglie en 1924) : on appelle ceci la dualité onde-corpuscule. Posons en premier temps la définition d'une onde :
+Qu'est ce que la lumière ? Comment se propage-t-elle ? Voilà un débat qui a enflammé les derniers siècles. La conclusion de ces débats fut que la lumière se comporte comme à la fois un ensemble de photons mais également comme un onde (phénomène mis en évidence par Louis \textsc{De Broglie} en 1924) : on appelle ceci la dualité onde-corpuscule. Posons en premier temps la définition d'une onde :
 \begin{définition}{Onde}{}
 Une onde est la propagation d'une perturbation de proche en proche avec transfert d'énergie
 \end{définition}
@@ -28,15 +28,17 @@ Dans le cadre du modèle de l'optique géométrique, on vient étudier le compor
 On définit un rayon lumineux comme une courbe de l'espace selon laquelle se propage l'énergie lumineuse (véhiculée par l'onde).
 \end{définition}
 On représentera donc la lumière par des courbes fléchées.
+Notons qu'\textit{a priori}, ce qu'est la lumière ne donne pas d'information sur la forme de ces courbes.
 \begin{remarque}{}{}
 	D'un point de vue expérimental, la modélisation de la lumière par des rayons lumineux fonctionne bien (dans la limite d'objets assez grands devant la longueur d'onde de l'onde, pour ne pas avoir de diffraction).
-\end{remarque}{}{}
+	Il n'y a diffraction que dans le cas où la taille de l'objet est de l'ordre de grandeur de la longueur d'onde du rayon lumineux (<1$\mu\meter$ pour les rayons visibles).
+\end{remarque}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=.08]{Diffraction.jpeg}
 	\caption{Illustration du phénomène de diffraction}
 \end{figure}
-Nous avons à présent un modèle pour la lumière, et nous allons pouvoir étudier son devenir.
+Nous avons à présent un modèle pour la lumière, et nous allons pouvoir étudier sa propagation.
 
 \section{Comment voit-on la vache ?}
 \subsection{Propagation de la lumière}
@@ -76,16 +78,16 @@ Le trajet de la lumière ne dépend pas du sens de parcours
 	Ceci s'illustre car le milieu est homogène et isotrope.
 \end{proof}
 \subsection{Fonctionnement du ray tracing}
-Considérons une lampe qui éclaire notre vache. Nous nous demandons comment un observateur extérieur peut voir la vache.
+Considérons une lampe qui éclaire notre vache. On va s'intéresser à la manière dont un observateur extérieur peut voir la vache.
+Un observateur extérieur ne voit une surface que si celle-ci réfléchit la lumière vers son \oe il.
 
-
-Une idée naïve serait de prendre notre source lumineuse, de déduire la marche d'un rayon lumineux (à l'aide de lois que nous verrons plus tard).
+L'idée naïve est de prendre notre source lumineuse, de déduire la marche d'un rayon lumineux.
 % mettre une figure pour illustrer ceci
 Le problème ici est qu'on doit tracer la marche d'un grand nombre de rayons pour avoir une image de bonne résolution, sachant que la plupart des rayons n'atteindront jamais l'observateur !
 % mettre une figure pour illustrer ceci
 Pour nous sauver, le principe de retour inverse de la lumière vient à notre rescousse ! En effet, il suffit de tracer les rayons dirigés de l'\oe il vers la vache, et ensuite voir si le rayon intercepte notre source lumineuse.
 % figure !
-L'avantage : on peut se restreindre à un nombre de rayons plus limité, en ne prenant que ceux qui vont entrer dans le champ de vision de l'observateur et économisant énormément de puissance de calcul (ce qui est nécessaire pour la fluidité d'un jeu vidéo).
+L'avantage : on peut se restreindre à un nombre de rayons plus limité, en ne prenant que ceux qui vont entrer dans le champ de vision de l'observateur et économisant énormément de puissance de calcul (ce qui est nécessaire pour la fluidité d'un jeu vidéo par exemple).
 
 \section{Implémentation pratique}
 \subsection{Comment prédire la trajectoire de la lumière ?}
@@ -105,7 +107,7 @@ On note $(AB) = nAB$ le chemin optique. Le principe de Fermat s'écrit de maniè
 	Dans un milieu d'indice constant, la minimisation du chemin optique est équivalente à celle de la distance entre deux points. On sait que le chemin le plus court entre deux points est la ligne droite : on retrouve que dans un MTHI, les rayons lumineux sont des droites.
 \end{remarque}
 Ce principe permet d'intuiter les lois dites de Snell-Descartes :
-\begin{théorème}{Lois de Snell-Descartes}{}
+\begin{théorème}{Lois de Snell-Descartes}{snelldescartes1}
 À l'interface entre deux milieux d'indice optique $n_1$ et $n_2$, la propagation d'un rayon lumineux en provenance du milieu $1$ se fait selon les lois suivantes :
 \begin{itemize}
 	\item\color{vulm}{Plan d'incidence :}\ \color{black} Il existe un rayon réfléchi (qui reste dans le milieu $1$) et un rayon réfracté (qui se propage dans le milieu $2$) qui sont tous les deux situés dans le plan formé par le rayon incident et la normale au dioptre.
@@ -211,9 +213,140 @@ Ce principe permet d'intuiter les lois dites de Snell-Descartes :
 	\end{equation*}
 	En dérivant et cherchant les extrema (on annule la dérivée), on trouve que $i_1$ = $i'_1$
 	\item \color{vulm}{Réfraction :}\ \color{black} Principe analogue à la réflexion.
-	
+
 \end{itemize}
 \end{proof}
 Nous avons à présent un moyen de prédire la trajectoire des rayons lumineux à l'aide de la connaissance des indices optiques.
+Il suffit donc de savoir la direction initiale d'un rayon et les représentations de tous les objets dans l'environnement pour pouvoir calculer la trajectoire complète d'un rayon.
+Reste à savoir comment effectuer ces calculs en pratique.
+
+\subsection{Modélisation Informatique des Objets et des Rayons}
+On doit faire face à deux contraintes majeures: l'espace et le temps.
+En effet, on doit effectuer les calculs de lumière 60 fois par seconde, dans une limite de 8Go de mémoire vive, pour éviter que le jeu ne crashe.
+Par ailleurs, puisque peu d'objets réels peuvent être définis par une fonction mathématique simple, afin d'effectuer les calculs sans encombre, on va faire une supposition assez violente, celle que toutes les surfaces qu'on va considérer sont suffisamment régulières.
+En particulier, on va supposer qu'on peut aisément les représenter par des triangulations (ou \emph{mesh} en anglais).
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[axis equal]
+			\addplot3 [patch] file {Images/camel.dat}; % TODO: UNCOMMENT
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Triangulation d'un Chameau}
+	\label{fig:camel}
+\end{figure}
+
+\begin{définition}{Triangulation 3D}{}
+	Une triangulation d'un objet est un ensemble $\mathcal{V} = \onen{n}$ de sommets ($x_{i} \in \R^{3}$ pour $i \in \mathcal{V}$), et un ensemble $\mathcal{F} \subseteq \mathcal{V}^{3 * m}$ de triangles appelés faces.
+\end{définition}
+
+Ceci nous permet de définir un objet en ne connaissant qu'un nombre fini de point.
+Ceci ne change rien en réalité puisqu'on reste limité par la précision des calculs sur les nombres flottants (à virgule).
+
+\begin{remarque}{}{}
+	Formellement (plus ou moins), une triangulation est un complexe simplicial (ensemble de triangles) homéomorphe (qui peut être déformé sans créer de trous ni fermer de trous) à la variété (l'objet).
+\end{remarque}
+
+Ici, on a donc la capacité de modéliser entièrement notre environnement informatiquement.
+
+\begin{remarque}{}{}
+	Pour un objet suffisamment agréable (donc modélisable par une fonction mathématique simple $z = f(x, y)$), la normale au point $(x, y, z)$ est définie par $(-\frac{\partial{f}}{\partial{x}}, -\frac{\partial{f}}{\partial{y}}, 1)$
+\end{remarque}
+
+On introduit un opérateur simple qui va nous servir à calculer la normale à une surface:
+\begin{définition}{Produit Vectoriel}{}
+	Si $u, v \in \R^{3}$, on définit le produit vectoriel $u \times v$ de $u$ et $v$ comme le vecteur orthogonal à $u$ et $v$, de norme $\norm{u}\cdot\norm{v}\cdot\sin(\hat{u, v})$ et orienté selon la règle de la main droite:
+	\begin{equation*}
+		u \times v = \begin{pmatrix}
+			u_{2}v_{3} - u_{3}v_{2}\\
+			u_{3}v_{1} - u_{1}v_{3}\\
+			u_{1}v_{2} - u_{2}v_{1}
+		\end{pmatrix}
+	\end{equation*}
+\end{définition}
+\begin{propositionfr}{Propriétés}{}
+	On a:
+	\begin{itemize}
+		\item $u\times v = -v\times u$
+		\item $u\times u = 0$
+	\end{itemize}
+\end{propositionfr}
+
+\begin{remarque}{}{}
+	Il est impossible de définir des opérateurs similaires aux produits vectoriels en dimensions supérieures. Sauf en dimension 7.
+\end{remarque}
+
+Puisqu'on n'a ici que des triangles dont on connaît les trois côtés, on peut aisément trouver la normale en tout point appartenant à la face (et on peut aisément trouver la face atteinte par un rayon par une méthode qu'on décrira plus tard):
+\begin{propositionfr}{Normale à un Triangle}{}
+	Si $T = (i, j, k)$ est une face d'une triangulation de sommets $x_{i}, x_{j}, x_{k}$, alors la normale à l'objet en tout point de la face $T$ est définie par:
+	\begin{equation*}
+		(x_{j} - x_{i}) \times (x_{k} - x_{i})
+	\end{equation*}
+\end{propositionfr}
+
+Il ne nous reste donc qu'à savoir comment appliquer les lois de Snell-Descartes à un rayon lumineux, et donc, savoir comment représenter un rayon lumineux.
+\begin{propositionfr}{}{}
+	Une droite de l'espace euclidien $\R^{n}$ peut être vue comme un vecteur de norme $1$ $v \in \R^{n}$ appelé vecteur directeur associé à un point $p \in \R^{n}$ par lequel elle passe.
+\end{propositionfr}
+Cette représentation simple nous amène à la reformulation des lois de Snell-Descartes:
+\begin{propositionfr}{Lois de Snell-Descartes Vectorielles}
+	On se donne $\overrightarrow{l}$ un vecteur directeur de rayon de lumière, $\vec{n}$ la normale à la surface au point où elle est atteinte.
+	On garde les notations de \ref{thm:snelldescartes1}.
+	On a:
+	\begin{description}
+		\item[Réfraction] On a:
+			\begin{equation}
+				\vec{v}_{réfracté} = \frac{n_{1}}{n_{2}}\vec{l} + \left(\frac{n_{1}}{n_{2}}\cos i_{1} - \cos i_{2}\right)
+				\label{snelldescartesrefraction}
+			\end{equation}
+		\item[Réflexion] On a:
+			\begin{equation}
+				\vec{v}_{réfléchi} = \vec{l} + 2\cos i_{1}\vec{n}
+				\label{snelldescartesreflexion}
+			\end{equation}
+	\end{description}
+\end{propositionfr}
+\begin{proof}
+	Par le calcul, on vérifie que les vecteurs $\vec{v}_{réfléchi}$ et $\vec{v}_{réfracté}$ conviennent.
+\end{proof}
+En associant à chaque droite une intensité lumineuse et une couleur, on a une modélisation parfaite d'un rayon lumineux.
+
+Puisqu'on sait calculer, en tout point d'un objet, la normale et appliquer les lois de Snell-Descartes à notre représentation par vecteur directeur, il ne nous reste plus qu'à savoir calculer quand un rayon va intersecter un objet.
+
+On suppose donné un rayon (paramétré par $t$) $P(t) = O+ t\cdot D$ et on cherche un $t_{i}$ tel que $P(t_{i}) \in F = (P_{0}, P_{1}, P_{2})$.
+On note $N$ la normale du triangle $F$.
+On calcule d'abord le point d'intersection entre le rayon et le plan qui contient le triangle:
+\begin{equation*}
+	t_{intersect} = \frac{\left(d - N\cdot O\right)}{N \cdot D}
+\end{equation*}
+On vérifie alors si le point $I = P(t_{i})$ obtenu appartient au triangle. Pour cela on calcule les coordonnées dites barycentrique $\beta_{i}$ du point (i.e. $I = \beta_{0}P_{0} + \beta_{1}P_{1} + \beta_{2}P_{2}$):
+\begin{equation*}
+	\beta_{i} = \norm{\left(P_{i + 2} - P_{i + 1}\right) \times \left(I - P_{i + 1}\right)}/\norm{N}
+\end{equation*}
+Alors $I$ est dans le triangle si et seulement si les trois $\beta_{i}$ sont entre $0$ et $1$.
+
+Pour finir, on a obtenu un algorithme de Ray Tracing: la couleur en un point est donnée par:
+\begin{algorithm}[H]
+	\caption{Ray Tracing}
+	\begin{algorithmic}
+		\Function{\tt ray\_cast}{r, scène, profondeur}
+			\If {prodondeur $>$ profondeur\_max}
+			\State {couleur $\gets$ noir}
+				\Else
+				\If {intersection(r, scène)}
+					\State {p $\gets$ point\_intersection(r, scène)}
+					\State {u $\gets$ réfléchi(r, p)}
+					\State {v $\gets$ réfracté(r, p)}
+					\State {couleur $\gets \left(\begin{aligned}k_{t} &\times \texttt{ray\_cast}(\text{u, scène, profondeur} + 1) \\ &+ k_{s}\times \texttt{ray\_cast}(\text{v, scène, profondeur} + 1)\end{aligned}\right)$}
+				\EndIf
+			\EndIf
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+Pour se faciliter la vie, on ne va pas tester tous les points d'intersection: si on en a trouvé un on s'arrête, et on va séparer l'espace en plusieurs parties pour restreindre les objets qui pourraient potentiellement être atteints.
+Toutefois, les algorithmes qui effectuent ces répartitions sont un peu trop complexes pour être détaillés ici.
+Vous pouvez vous renseigner en cherchant les constructions de \emph{BVH} et des \emph{USS, Quadtree/Octree, kd-trees, BSP-trees}.
 
 \end{document}

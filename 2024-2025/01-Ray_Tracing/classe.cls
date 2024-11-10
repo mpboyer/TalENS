@@ -11,6 +11,8 @@
 \RequirePackage{texnames}
 \RequirePackage{array}
 \RequirePackage{tikz}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \RequirePackage{booktabs}
 \RequirePackage{nicematrix}
 \RequirePackage{textcomp}
