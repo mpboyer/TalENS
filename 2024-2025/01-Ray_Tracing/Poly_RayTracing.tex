@@ -17,7 +17,7 @@
 
 \begin{document}
 \section*{Introduction}
-on fait du blabla sur les rendus 3D, en parlant des contraintes de performance intrinsèques aux JV
+% TODO: TODOOM.
 
 \section{Faire briller un chameau de mille feux ?}
 \subsection{La lumière, kéazko ?}
@@ -33,7 +33,7 @@ On représentera donc la lumière par des courbes fléchées.
 Notons qu'\textit{a priori}, ce qu'est la lumière ne donne pas d'information sur la forme de ces courbes.
 \begin{remarque}{}{}
 	D'un point de vue expérimental, la modélisation de la lumière par des rayons lumineux fonctionne bien (dans la limite d'objets assez grands devant la longueur d'onde de l'onde, pour ne pas avoir de diffraction).
-	Il n'y a diffraction que dans le cas où la taille de l'objet est de l'ordre de grandeur de la longueur d'onde du rayon lumineux (<1$\mu\meter$ pour les rayons visibles).
+	Il n'y a diffraction que dans le cas où la taille de l'objet est de l'ordre de grandeur de la longueur d'onde du rayon lumineux ($<\unit{1}{\micro\meter}$ pour les rayons visibles).
 \end{remarque}
 \begin{figure}[H]
 	\centering
@@ -51,11 +51,10 @@ On a déjà vu qu'à la lumière on pouvait associer une onde. Regardons un peu 
 	\end{equation*}
 \end{définition}
 \begin{remarque}{Couleur}{}
-En pratique, on peut associer à chaque longueur d'onde une couleur, comme le montre le spectre ci-dessous
-\end{remarque}
-\begin{figure}[H]
-\centering
-\begin{tikzpicture} [scale=1]
+En pratique, on peut associer à chaque longueur d'onde une couleur, comme le montre le spectre ci-dessous:
+\begin{center}
+	\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[scale=1]
 \shade[left color=white,right color=black] (-13.5,0.1) rectangle (-13,2.9);
 \node[draw,rectangle,fill=black,text=white,minimum width=2cm,minimum height=2.8cm]  at (-12,1.5){$\gamma$};
 \node[rectangle,fill=black,text=white,minimum width=2.58cm,minimum height=2.8cm]  at (-10,1.5){Rayons X};
@@ -76,10 +75,13 @@ En pratique, on peut associer à chaque longueur d'onde une couleur, comme le mo
 
 \foreach \x/\y in {-6.42/violet,-6.37/blue,-6.32/cyan,-6.27/green,-6.22/yellow,-6.17/orange,-6.12/red}
      \draw[shift={(\x,0)},\y,line width=0.5mm] (0,3) -- (0,0);
-\end{tikzpicture}\caption{Spectre électromagnétique du visible}
-\end{figure}
+\end{tikzpicture}}
+\captionof{figure}{Spectre électromagnétique du visible}
+\end{center}
+\end{remarque}
 
-\section{Comment voit-on le chameau ?}
+
+\section{Comment un écran voit-il un chameau ?}
 \subsection{Propagation de la lumière}
 Étudions la propagation de la lumière dans certains milieux que nous allons définir ci-dessous.
 \begin{définition}{MTHI - Milieux Transparents Homogènes Isotropes}{}
@@ -128,17 +130,24 @@ Le trajet de la lumière ne dépend pas du sens de parcours
 \end{proof}
 
 
-\subsection{Fonctionnement du ray tracing}
+\subsection{Principe du Ray Tracing}
 Considérons une lampe qui éclaire notre chameau. On va s'intéresser à la manière dont un observateur extérieur peut voir le chameau.
 Un observateur extérieur ne voit une surface que si celle-ci réfléchit la lumière vers son \oe il.
 
 L'idée naïve est de prendre notre source lumineuse, de déduire la marche d'un rayon lumineux.
-% mettre une figure pour illustrer ceci
+% TODO: mettre une figure pour illustrer ceci
 Le problème ici est qu'on doit tracer la marche d'un grand nombre de rayons pour avoir une image de bonne résolution, sachant que la plupart des rayons n'atteindront jamais l'observateur !
-% mettre une figure pour illustrer ceci
+% TODO: mettre une figure pour illustrer ceci
 Pour nous sauver, le principe de retour inverse de la lumière vient à notre rescousse ! En effet, il suffit de tracer les rayons dirigés de l'\oe il vers le chameau, et ensuite voir si le rayon intercepte notre source lumineuse.
-% figure !
+% TODO: figure !
 L'avantage : on peut se restreindre à un nombre de rayons plus limité, en ne prenant que ceux qui vont entrer dans le champ de vision de l'observateur et économisant énormément de puissance de calcul (ce qui est nécessaire pour la fluidité d'un jeu vidéo par exemple).
+
+Donc, pour calculer la répartition de lumière sur l'écran (et donc la couleur de chaque pixel), il nous reste à:
+\begin{enumerate}
+	\item Trouver comment la trajectoire d'un rayon est modifiée en rencontrant un objet.
+	\item Trouver comment la couleur d'un rayon est modifiée en rencontrant un objet.
+	\item Trouver comment modéliser un objet et calculer son intersection avec des rayons lumineux.
+\end{enumerate}
 
 \section{Implémentation pratique}
 \subsection{Comment prédire la trajectoire de la lumière ?}
@@ -285,19 +294,12 @@ On introduit un opérateur simple qui va nous servir à calculer la normale à u
 		\end{pmatrix}
 	\end{equation*}
 \end{définition}
-\begin{propositionfr}{Propriétés}{}
-	On a:
-	\begin{itemize}
-		\item $u\times v = -v\times u$
-		\item $u\times u = 0$
-	\end{itemize}
-\end{propositionfr}
 
 \begin{remarque}{}{}
 	Il est impossible de définir des opérateurs similaires aux produits vectoriels en dimensions supérieures. Sauf en dimension 7.
 \end{remarque}
 
-Puisqu'on n'a ici que des triangles dont on connaît les trois côtés, on peut aisément trouver la normale en tout point appartenant à la face (et on peut aisément trouver la face atteinte par un rayon par une méthode qu'on décrira plus tard):
+Dans le cas d'un triangle dont on connaît les trois côtés, on peut aisément trouver la normale en tout point appartenant à la face:
 \begin{propositionfr}{Normale à un Triangle}{}
 	Si $T = (i, j, k)$ est une face d'une triangulation de sommets $x_{i}, x_{j}, x_{k}$, alors la normale à l'objet en tout point de la face $T$ est définie par:
 	\begin{equation*}
@@ -333,21 +335,23 @@ En associant à chaque droite une intensité lumineuse et une couleur, on a une 
 
 Le modèle de l'optique géométrique ne détaille pas comment la puissance véhiculée par les rayons lumineux évolue après passage dans un dioptre. Pour y remédier, on définit deux grandeurs :
 \begin{définition}{Coefficients de puissance}{}
-	\begin{itemize}
-		\item \color{vulm}{Coefficient en réflexion}\ \color{black} On définit le coefficient de réflexion en puissance $R$ comme le rapport de la puissance véhiculée par l'onde réfléchie sur celle de l'onde incidente.
-		\item \color{vulm}{Coefficient en transmission}\ \color{black} On définit le coefficient de transmission en puissance $T$ comme le rapport de la puissance véhiculée par l'onde réfractée sur celle de l'onde incidente.
-	\end{itemize}
+	\begin{description}
+		\item[\color{vulm} Coefficient en réflexion] \color{black} On définit le coefficient de réflexion en puissance $R$ comme le rapport de la puissance véhiculée par l'onde réfléchie sur celle de l'onde incidente.
+		\item[\color{vulm}{Coefficient en transmission}] \color{black} On définit le coefficient de transmission en puissance $T$ comme le rapport de la puissance véhiculée par l'onde réfractée sur celle de l'onde incidente.
+	\end{description}
 \end{définition}
 \begin{remarque}{Conservation de la puissance ?}{}
-	On remarque que dans un MTHI, il n'y pas d'absorption de la lumière donc $1 = R + T$ (ce qui traduit la conservation de la puissance). Dans le cas contraire, on aurait $R + T < 1$.
+	Un objet opaque a un coefficient de transmission nul.
+	Dans un MTHI, il n'y pas d'absorption de la lumière donc $A = 0$ et $R + T = 1$ (ce qui traduit la conservation de la puissance).
+	Dans le cas contraire, par exemple pour un objet opaque, on a $R + T < 1$.
 \end{remarque}
 
 % Paragraphe sur couleur <-> Puissance absorbée
+En pratique, on peut
 
 Il suffit donc de savoir la direction initiale d'un rayon et les représentations de tous les objets dans l'environnement pour pouvoir calculer la trajectoire complète d'un rayon.
-Reste à savoir comment effectuer ces calculs en pratique.
 
-\subsection{Modélisation Informatique des Objets et des Rayons}
+\subsection{Le Chameau et l'Espace}
 On doit faire face à deux contraintes majeures: l'espace et le temps.
 En effet, on doit effectuer les calculs de lumière 60 fois par seconde, dans une limite de 8Go de mémoire vive, pour éviter que le jeu ne crashe.
 Par ailleurs, puisque peu d'objets réels peuvent être définis par une fonction mathématique simple, afin d'effectuer les calculs sans encombre, on va faire une supposition assez violente, celle que toutes les surfaces qu'on va considérer sont suffisamment régulières.
@@ -375,7 +379,7 @@ Ceci ne change rien en réalité puisqu'on reste limité par la précision des c
 	Formellement (plus ou moins), une triangulation est un complexe simplicial (ensemble de triangles) homéomorphe (qui peut être déformé sans créer de trous ni fermer de trous) à la variété (l'objet).
 \end{remarque}
 
-Puisqu'on sait calculer, en tout point d'un objet, la normale et appliquer les lois de Snell-Descartes à notre représentation par vecteur directeur, il ne nous reste plus qu'à savoir calculer quand un rayon va intersecter un objet.
+Puisqu'on sait calculer, en tout point d'un objet, la normale et appliquer les lois de Snell-Descartes à notre représentation par vecteur directeur, il ne nous reste plus qu'à savoir calculer quand un rayon va intersecter un objet:
 
 On suppose donné un rayon (paramétré par $t$) $P(t) = O+ t\cdot D$ et on cherche un $t_{i}$ tel que $P(t_{i}) \in F = (P_{0}, P_{1}, P_{2})$.
 On note $N$ la normale du triangle $F$.
@@ -401,14 +405,15 @@ Pour finir, on a obtenu un algorithme de Ray Tracing: la couleur en un point est
 					\State {p $\gets$ point\_intersection(r, scène)}
 					\State {u $\gets$ réfléchi(r, p)}
 					\State {v $\gets$ réfracté(r, p)}
-					\State {couleur $\gets \left(\begin{aligned}k_{t} &\times \texttt{ray\_cast}(\text{u, scène, profondeur} + 1) \\ &+ k_{s}\times \texttt{ray\_cast}(\text{v, scène, profondeur} + 1)\end{aligned}\right)$}
+					\State {couleur $\gets \left(\begin{aligned}k_{R} &\times \texttt{ray\_cast}(\text{u, scène, profondeur} + 1) \\
+							&+ k_{T}\times \texttt{ray\_cast}(\text{v, scène, profondeur} + 1)\end{aligned}\right)$}
 				\EndIf
 			\EndIf
 		\EndFunction
 	\end{algorithmic}
 \end{algorithm}
 
-Pour se faciliter la vie, on ne va pas tester tous les points d'intersection: si on en a trouvé un on s'arrête, et on va séparer l'espace en plusieurs parties pour restreindre les objets qui pourraient potentiellement être atteints.
+Dans la vraie vie, pour se faciliter la vie, on ne va pas tester tous les points d'intersection: si on en a trouvé un on s'arrête, et on va séparer l'espace en plusieurs parties pour restreindre les objets qui pourraient potentiellement être atteints.
 Toutefois, les algorithmes qui effectuent ces répartitions sont un peu trop complexes pour être détaillés ici.
 Vous pouvez vous renseigner en cherchant les constructions de \emph{BVH} et des \emph{USS, Quadtree/Octree, kd-trees, BSP-trees}.
 
