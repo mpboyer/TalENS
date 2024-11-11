@@ -16,8 +16,11 @@
 \graphicspath{{./Images/}}
 
 \begin{document}
-\section{Faire briller une vache de mille feux ?}
+\section{Faire briller un chameau de mille feux ?}
 \subsection{Introduction}
+
+on fait du blabla sur les rendus 3D, en parlant des contraintes de performance intrinsèques aux JV
+
 \subsection{La lumière, kéazko ?}
 Qu'est ce que la lumière ? Comment se propage-t-elle ? Voilà un débat qui a enflammé les derniers siècles. La conclusion de ces débats fut que la lumière se comporte comme à la fois un ensemble de photons mais également comme un onde (phénomène mis en évidence par Louis \textsc{De Broglie} en 1924) : on appelle ceci la dualité onde-corpuscule. Posons en premier temps la définition d'une onde :
 \begin{définition}{Onde}{}
@@ -25,7 +28,7 @@ Une onde est la propagation d'une perturbation de proche en proche avec transfer
 \end{définition}
 Dans le cadre du modèle de l'optique géométrique, on vient étudier le comportement de la lumière d'un point de vue simplifié, en introduisant la notion de rayon lumineux.
 \begin{définition}{Rayon Lumineux}{}
-On définit un rayon lumineux comme une courbe de l'espace selon laquelle se propage l'énergie lumineuse (véhiculée par l'onde).
+On définit un rayon lumineux comme une courbe de l'espace selon laquelle se propage l'énergie lumineuse (véhiculée par l'onde électromagnétique).
 \end{définition}
 On représentera donc la lumière par des courbes fléchées.
 Notons qu'\textit{a priori}, ce qu'est la lumière ne donne pas d'information sur la forme de ces courbes.
@@ -39,6 +42,24 @@ Notons qu'\textit{a priori}, ce qu'est la lumière ne donne pas d'information su
 	\caption{Illustration du phénomène de diffraction}
 \end{figure}
 Nous avons à présent un modèle pour la lumière, et nous allons pouvoir étudier sa propagation.
+
+\subsection{Mille feux et mille couleurs}
+
+On a déjà vu qu'à la lumière on pouvait associer une onde. Regardons un peu plus en détail une grandeur caractéristique de ce comportement ondulatoire :
+\begin{définition}{Longueur d'onde}{}
+	On appelle longueur d'onde d'une onde sa période spatiale $\lambda$, c'est à dire le plus petit réel non nul qui vérifie
+	\begin{equation*}
+		\forall x, s(x) = s(x+\lambda)
+	\end{equation*}
+\end{définition}
+\begin{remarque}{Couleur}{}
+En pratique, on peut associer à chaque longueur d'onde une couleur, comme le montre le spectre ci-dessous
+\end{remarque}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.5]{Spectre.jpg}
+\caption{Spectre électromagnétique du visible}
+\end{figure}
 
 \section{Comment voit-on la vache ?}
 \subsection{Propagation de la lumière}
@@ -63,6 +84,13 @@ où $c =\unit{299~792~458}{\meter\cdot\second^{-1}}$ est la vitesse de la lumiè
 \begin{example}
 	L'indice optique du vide vaut $1$, celui de l'air $1.0003$, celui de l'eau $1.33$ et le verre autour de $1.5$.
 \end{example}
+\begin{remarque}{Lien période - longueur d'onde}{}
+	On a ici
+	\begin{equation*}	
+		v_\varphi = \frac{\lambda}{T}
+	\end{equation*}
+	où $T$ est la période temporelle de l'onde
+\end{remarque}
 \begin{théorème}{Propagation de la lumière dans les MTHI}{}
 - Les rayons lumineux sont des droites;\\
 - Les rayons lumineux se propagent indépendamment entre eux.
@@ -77,15 +105,17 @@ Le trajet de la lumière ne dépend pas du sens de parcours
 \begin{proof}
 	Ceci s'illustre car le milieu est homogène et isotrope.
 \end{proof}
+
+
 \subsection{Fonctionnement du ray tracing}
-Considérons une lampe qui éclaire notre vache. On va s'intéresser à la manière dont un observateur extérieur peut voir la vache.
+Considérons une lampe qui éclaire notre chameau. On va s'intéresser à la manière dont un observateur extérieur peut voir le chameau.
 Un observateur extérieur ne voit une surface que si celle-ci réfléchit la lumière vers son \oe il.
 
 L'idée naïve est de prendre notre source lumineuse, de déduire la marche d'un rayon lumineux.
 % mettre une figure pour illustrer ceci
 Le problème ici est qu'on doit tracer la marche d'un grand nombre de rayons pour avoir une image de bonne résolution, sachant que la plupart des rayons n'atteindront jamais l'observateur !
 % mettre une figure pour illustrer ceci
-Pour nous sauver, le principe de retour inverse de la lumière vient à notre rescousse ! En effet, il suffit de tracer les rayons dirigés de l'\oe il vers la vache, et ensuite voir si le rayon intercepte notre source lumineuse.
+Pour nous sauver, le principe de retour inverse de la lumière vient à notre rescousse ! En effet, il suffit de tracer les rayons dirigés de l'\oe il vers le chameau, et ensuite voir si le rayon intercepte notre source lumineuse.
 % figure !
 L'avantage : on peut se restreindre à un nombre de rayons plus limité, en ne prenant que ceux qui vont entrer dans le champ de vision de l'observateur et économisant énormément de puissance de calcul (ce qui est nécessaire pour la fluidité d'un jeu vidéo par exemple).
 
@@ -217,6 +247,22 @@ Ce principe permet d'intuiter les lois dites de Snell-Descartes :
 \end{itemize}
 \end{proof}
 Nous avons à présent un moyen de prédire la trajectoire des rayons lumineux à l'aide de la connaissance des indices optiques.
+
+\subsection{La pouissance}
+
+Le modèle de l'optique géométrique ne détaille pas comment la puissance véhiculée par les rayons lumineux évolue après passage dans un dioptre. Pour y remédier, on définit deux grandeurs :
+\begin{définition}{Coefficients de puissance}{}
+	\begin{itemize}
+		\item \color{vulm}{Coefficient en réflexion}\ \color{black} On définit le coefficient de réflexion en puissance $R$ comme le rapport de la puissance véhiculée par l'onde réfléchie sur celle de l'onde incidente.
+		\item \color{vulm}{Coefficient en transmission}\ \color{black} On définit le coefficient de transmission en puissance $T$ comme le rapport de la puissance véhiculée par l'onde réfractée sur celle de l'onde incidente.
+	\end{itemize}
+\end{définition}
+\begin{remarque}{Conservation de la puissance ?}{}
+	On remarque que dans un MTHI, il n'y pas d'absorption de la lumière donc $1 = R + T$ (ce qui traduit la conservation de la puissance). Dans le cas contraire, on aurait $R + T < 1$.
+\end{remarque}
+
+% Paragraphe sur couleur <-> Puissance
+
 Il suffit donc de savoir la direction initiale d'un rayon et les représentations de tous les objets dans l'environnement pour pouvoir calculer la trajectoire complète d'un rayon.
 Reste à savoir comment effectuer ces calculs en pratique.
 
