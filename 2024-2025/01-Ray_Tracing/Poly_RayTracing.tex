@@ -16,11 +16,10 @@
 \graphicspath{{./Images/}}
 
 \begin{document}
-\section{Faire briller un chameau de mille feux ?}
-\subsection{Introduction}
-
+\section*{Introduction}
 on fait du blabla sur les rendus 3D, en parlant des contraintes de performance intrinsèques aux JV
 
+\section{Faire briller un chameau de mille feux ?}
 \subsection{La lumière, kéazko ?}
 Qu'est ce que la lumière ? Comment se propage-t-elle ? Voilà un débat qui a enflammé les derniers siècles. La conclusion de ces débats fut que la lumière se comporte comme à la fois un ensemble de photons mais également comme un onde (phénomène mis en évidence par Louis \textsc{De Broglie} en 1924) : on appelle ceci la dualité onde-corpuscule. Posons en premier temps la définition d'une onde :
 \begin{définition}{Onde}{}
@@ -44,7 +43,6 @@ Notons qu'\textit{a priori}, ce qu'est la lumière ne donne pas d'information su
 Nous avons à présent un modèle pour la lumière, et nous allons pouvoir étudier sa propagation.
 
 \subsection{Mille feux et mille couleurs}
-
 On a déjà vu qu'à la lumière on pouvait associer une onde. Regardons un peu plus en détail une grandeur caractéristique de ce comportement ondulatoire :
 \begin{définition}{Longueur d'onde}{}
 	On appelle longueur d'onde d'une onde sa période spatiale $\lambda$, c'est à dire le plus petit réel non nul qui vérifie
@@ -57,11 +55,31 @@ En pratique, on peut associer à chaque longueur d'onde une couleur, comme le mo
 \end{remarque}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=.5]{Spectre.jpg}
-\caption{Spectre électromagnétique du visible}
+\begin{tikzpicture} [scale=1]
+\shade[left color=white,right color=black] (-13.5,0.1) rectangle (-13,2.9);
+\node[draw,rectangle,fill=black,text=white,minimum width=2cm,minimum height=2.8cm]  at (-12,1.5){$\gamma$};
+\node[rectangle,fill=black,text=white,minimum width=2.58cm,minimum height=2.8cm]  at (-10,1.5){Rayons X};
+\node[rectangle,fill=black,text width=2cm,,text=white,minimum width=2.58cm,minimum height=2.8cm,text centered] at (-7.7,1.5){Ultra Violet};
+\node[rectangle,fill=black,text width=2cm,,text=white,minimum width=3.1cm,minimum height=2.8cm,text centered]  at (-4.56,1.5){Infra Rouge};
+\node[rectangle,fill=black,text width=2cm,,text=white,minimum width=2cm,minimum height=2.8cm,text centered]  at (-2,1.5){Micro ondes};
+\node[rectangle,fill=black,text width=2cm,,text=white,minimum width=2.5cm,minimum height=2.8cm,text centered]  at (0.25,1.5){Ondes Radio (UHF, VHF, HF)};
+\shade[left color=black,right color=white] (1.4,0.1) rectangle (2,2.9);
+\foreach \x in {-11,-9,-3,-1}\draw[shift={(\x,0)},thin,white] (0,3) -- (0,0);
+\draw[->](-13,0)--++(15,0)node[below]{$\lambda$ (m)};
+\draw[->](-13,3)--++(15,0)node[above]{$\nu$ (Hz)};
+\foreach \x in{-12,-11,...,-1}
+	 \draw[shift={(\x,0)}] (0pt,1pt) -- (0pt,-1pt) node[below] {\small $10^{\x}$};
+\foreach \y in {21,20,...,8}
+	\draw[shift={(8.48-\y,3)}] (0pt,1pt) -- (0pt,-1pt) node[above=2pt] {\small $10^{\y}$};
+\foreach \x/\xtext in {1/10,0/1}
+ \draw[shift={(\x,0)}] (0pt,1pt) -- (0pt,-1pt) node[below=0.2em] {\small $\xtext$};
+
+\foreach \x/\y in {-6.42/violet,-6.37/blue,-6.32/cyan,-6.27/green,-6.22/yellow,-6.17/orange,-6.12/red}
+     \draw[shift={(\x,0)},\y,line width=0.5mm] (0,3) -- (0,0);
+\end{tikzpicture}\caption{Spectre électromagnétique du visible}
 \end{figure}
 
-\section{Comment voit-on la vache ?}
+\section{Comment voit-on le chameau ?}
 \subsection{Propagation de la lumière}
 Étudions la propagation de la lumière dans certains milieux que nous allons définir ci-dessous.
 \begin{définition}{MTHI - Milieux Transparents Homogènes Isotropes}{}
@@ -86,7 +104,7 @@ où $c =\unit{299~792~458}{\meter\cdot\second^{-1}}$ est la vitesse de la lumiè
 \end{example}
 \begin{remarque}{Lien période - longueur d'onde}{}
 	On a ici
-	\begin{equation*}	
+	\begin{equation*}
 		v_\varphi = \frac{\lambda}{T}
 	\end{equation*}
 	où $T$ est la période temporelle de l'onde
@@ -98,6 +116,9 @@ où $c =\unit{299~792~458}{\meter\cdot\second^{-1}}$ est la vitesse de la lumiè
 \begin{proof}
 	On prouvera un de ces points ultérieurement.
 \end{proof}
+\begin{propositionfr}{Droite Paramétrée}{}
+	Une droite de l'espace euclidien $\R^{n}$ peut être vue comme un vecteur de norme $1$ $v \in \R^{n}$ appelé vecteur directeur associé à un point $p \in \R^{n}$ par lequel elle passe.
+\end{propositionfr}
 Un des principes fondamentaux de la propagation de la lumière dans les MTHI est le suivant :
 \begin{théorème}{Principe du retour inverse de la lumière}{}
 Le trajet de la lumière ne dépend pas du sens de parcours
@@ -216,7 +237,8 @@ Ce principe permet d'intuiter les lois dites de Snell-Descartes :
 	\begin{tikzpicture}
 		\draw[vulm] (-2, -2) -- (-2, 2) -- (2, 2) -- (2, -2) -- cycle;
 		\draw (0, 2) node[above]{Plan d'incidence};
-		\point{-1}{1}{$A$};
+		\point{-1}{1}{};
+		\node at (-1.2, 1.2) {$A$};
 		\point{1}{1.5}{$B$};
 		\point{-.4}{0}{$D$};
 		\draw[->] (0, .2) -- (-.4, .2);
@@ -247,54 +269,6 @@ Ce principe permet d'intuiter les lois dites de Snell-Descartes :
 \end{itemize}
 \end{proof}
 Nous avons à présent un moyen de prédire la trajectoire des rayons lumineux à l'aide de la connaissance des indices optiques.
-
-\subsection{La pouissance}
-
-Le modèle de l'optique géométrique ne détaille pas comment la puissance véhiculée par les rayons lumineux évolue après passage dans un dioptre. Pour y remédier, on définit deux grandeurs :
-\begin{définition}{Coefficients de puissance}{}
-	\begin{itemize}
-		\item \color{vulm}{Coefficient en réflexion}\ \color{black} On définit le coefficient de réflexion en puissance $R$ comme le rapport de la puissance véhiculée par l'onde réfléchie sur celle de l'onde incidente.
-		\item \color{vulm}{Coefficient en transmission}\ \color{black} On définit le coefficient de transmission en puissance $T$ comme le rapport de la puissance véhiculée par l'onde réfractée sur celle de l'onde incidente.
-	\end{itemize}
-\end{définition}
-\begin{remarque}{Conservation de la puissance ?}{}
-	On remarque que dans un MTHI, il n'y pas d'absorption de la lumière donc $1 = R + T$ (ce qui traduit la conservation de la puissance). Dans le cas contraire, on aurait $R + T < 1$.
-\end{remarque}
-
-% Paragraphe sur couleur <-> Puissance
-
-Il suffit donc de savoir la direction initiale d'un rayon et les représentations de tous les objets dans l'environnement pour pouvoir calculer la trajectoire complète d'un rayon.
-Reste à savoir comment effectuer ces calculs en pratique.
-
-\subsection{Modélisation Informatique des Objets et des Rayons}
-On doit faire face à deux contraintes majeures: l'espace et le temps.
-En effet, on doit effectuer les calculs de lumière 60 fois par seconde, dans une limite de 8Go de mémoire vive, pour éviter que le jeu ne crashe.
-Par ailleurs, puisque peu d'objets réels peuvent être définis par une fonction mathématique simple, afin d'effectuer les calculs sans encombre, on va faire une supposition assez violente, celle que toutes les surfaces qu'on va considérer sont suffisamment régulières.
-En particulier, on va supposer qu'on peut aisément les représenter par des triangulations (ou \emph{mesh} en anglais).
-
-\begin{figure}[h]
-	\centering
-	\begin{tikzpicture}
-		\begin{axis}[axis equal]
-			\addplot3 [patch] file {Images/camel.dat}; % TODO: UNCOMMENT
-		\end{axis}
-	\end{tikzpicture}
-	\caption{Triangulation d'un Chameau}
-	\label{fig:camel}
-\end{figure}
-
-\begin{définition}{Triangulation 3D}{}
-	Une triangulation d'un objet est un ensemble $\mathcal{V} = \onen{n}$ de sommets ($x_{i} \in \R^{3}$ pour $i \in \mathcal{V}$), et un ensemble $\mathcal{F} \subseteq \mathcal{V}^{3 * m}$ de triangles appelés faces.
-\end{définition}
-
-Ceci nous permet de définir un objet en ne connaissant qu'un nombre fini de point.
-Ceci ne change rien en réalité puisqu'on reste limité par la précision des calculs sur les nombres flottants (à virgule).
-
-\begin{remarque}{}{}
-	Formellement (plus ou moins), une triangulation est un complexe simplicial (ensemble de triangles) homéomorphe (qui peut être déformé sans créer de trous ni fermer de trous) à la variété (l'objet).
-\end{remarque}
-
-Ici, on a donc la capacité de modéliser entièrement notre environnement informatiquement.
 
 \begin{remarque}{}{}
 	Pour un objet suffisamment agréable (donc modélisable par une fonction mathématique simple $z = f(x, y)$), la normale au point $(x, y, z)$ est définie par $(-\frac{\partial{f}}{\partial{x}}, -\frac{\partial{f}}{\partial{y}}, 1)$
@@ -332,9 +306,6 @@ Puisqu'on n'a ici que des triangles dont on connaît les trois côtés, on peut 
 \end{propositionfr}
 
 Il ne nous reste donc qu'à savoir comment appliquer les lois de Snell-Descartes à un rayon lumineux, et donc, savoir comment représenter un rayon lumineux.
-\begin{propositionfr}{}{}
-	Une droite de l'espace euclidien $\R^{n}$ peut être vue comme un vecteur de norme $1$ $v \in \R^{n}$ appelé vecteur directeur associé à un point $p \in \R^{n}$ par lequel elle passe.
-\end{propositionfr}
 Cette représentation simple nous amène à la reformulation des lois de Snell-Descartes:
 \begin{propositionfr}{Lois de Snell-Descartes Vectorielles}
 	On se donne $\overrightarrow{l}$ un vecteur directeur de rayon de lumière, $\vec{n}$ la normale à la surface au point où elle est atteinte.
@@ -357,6 +328,52 @@ Cette représentation simple nous amène à la reformulation des lois de Snell-D
 	Par le calcul, on vérifie que les vecteurs $\vec{v}_{réfléchi}$ et $\vec{v}_{réfracté}$ conviennent.
 \end{proof}
 En associant à chaque droite une intensité lumineuse et une couleur, on a une modélisation parfaite d'un rayon lumineux.
+
+\subsection{La pouissance}
+
+Le modèle de l'optique géométrique ne détaille pas comment la puissance véhiculée par les rayons lumineux évolue après passage dans un dioptre. Pour y remédier, on définit deux grandeurs :
+\begin{définition}{Coefficients de puissance}{}
+	\begin{itemize}
+		\item \color{vulm}{Coefficient en réflexion}\ \color{black} On définit le coefficient de réflexion en puissance $R$ comme le rapport de la puissance véhiculée par l'onde réfléchie sur celle de l'onde incidente.
+		\item \color{vulm}{Coefficient en transmission}\ \color{black} On définit le coefficient de transmission en puissance $T$ comme le rapport de la puissance véhiculée par l'onde réfractée sur celle de l'onde incidente.
+	\end{itemize}
+\end{définition}
+\begin{remarque}{Conservation de la puissance ?}{}
+	On remarque que dans un MTHI, il n'y pas d'absorption de la lumière donc $1 = R + T$ (ce qui traduit la conservation de la puissance). Dans le cas contraire, on aurait $R + T < 1$.
+\end{remarque}
+
+% Paragraphe sur couleur <-> Puissance absorbée
+
+Il suffit donc de savoir la direction initiale d'un rayon et les représentations de tous les objets dans l'environnement pour pouvoir calculer la trajectoire complète d'un rayon.
+Reste à savoir comment effectuer ces calculs en pratique.
+
+\subsection{Modélisation Informatique des Objets et des Rayons}
+On doit faire face à deux contraintes majeures: l'espace et le temps.
+En effet, on doit effectuer les calculs de lumière 60 fois par seconde, dans une limite de 8Go de mémoire vive, pour éviter que le jeu ne crashe.
+Par ailleurs, puisque peu d'objets réels peuvent être définis par une fonction mathématique simple, afin d'effectuer les calculs sans encombre, on va faire une supposition assez violente, celle que toutes les surfaces qu'on va considérer sont suffisamment régulières.
+En particulier, on va supposer qu'on peut aisément les représenter par des triangulations (ou \emph{mesh} en anglais).
+
+\begin{figure}[h]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[axis equal, scale=2, axis lines = none]
+			% \addplot3 [patch] file {Images/camel.dat}; % TODO: UNCOMMENT
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Triangulation d'un Chameau}
+	\label{fig:camel}
+\end{figure}
+
+\begin{définition}{Triangulation 3D}{}
+	Une triangulation d'un objet est un ensemble $\mathcal{V} = \onen{n}$ de sommets ($x_{i} \in \R^{3}$ pour $i \in \mathcal{V}$), et un ensemble $\mathcal{F} \subseteq \mathcal{V}^{3 * m}$ de triangles appelés faces.
+\end{définition}
+
+Ceci nous permet de définir un objet en ne connaissant qu'un nombre fini de point.
+Ceci ne change rien en réalité puisqu'on reste limité par la précision des calculs sur les nombres flottants (à virgule).
+
+\begin{remarque}{}{}
+	Formellement (plus ou moins), une triangulation est un complexe simplicial (ensemble de triangles) homéomorphe (qui peut être déformé sans créer de trous ni fermer de trous) à la variété (l'objet).
+\end{remarque}
 
 Puisqu'on sait calculer, en tout point d'un objet, la normale et appliquer les lois de Snell-Descartes à notre représentation par vecteur directeur, il ne nous reste plus qu'à savoir calculer quand un rayon va intersecter un objet.
 
