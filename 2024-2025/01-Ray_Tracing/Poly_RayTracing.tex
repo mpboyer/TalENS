@@ -17,10 +17,12 @@
 
 \begin{document}
 \section*{Introduction}
-% TODO: TODOOM.
+L'imagerie 3D est un processus permettant l'affichage de scènes 3D sur un écran 2D, utilisé par exemple dans le cadre de jeux vidéos. L'intérêt est de transposer un monde en trois dimensions sur un écran. Cependant, ce procédé se doit d'être rapide pour pouvoir être simulé en toute fluidité par le jeu. La puissance de calcul étant limitée, on se doit de ruser pour faire un procédé qui est viable. Le Ray Tracing s'est imposé récemment comme une nouvelle technologie pour pouvoir simuler des jeux vidéos avec un très grand réalisme tout en garantissant une fluidité.
+\\
+Après avoir rediscuté de la lumière dans notre monde, nous allons voir comment on peut en pratique afficher un chameau sur un écran.
 
 \section{Faire briller un chameau de mille feux ?}
-\subsection{La lumière, kéazko ?}
+\subsection{La lumière, kézako ?}
 Qu'est ce que la lumière ? Comment se propage-t-elle ? Voilà un débat qui a enflammé les derniers siècles. La conclusion de ces débats fut que la lumière se comporte comme à la fois un ensemble de photons mais également comme un onde (phénomène mis en évidence par Louis \textsc{De Broglie} en 1924) : on appelle ceci la dualité onde-corpuscule. Posons en premier temps la définition d'une onde :
 \begin{définition}{Onde}{}
 Une onde est la propagation d'une perturbation de proche en proche avec transfert d'énergie
@@ -309,7 +311,7 @@ Dans le cas d'un triangle dont on connaît les trois côtés, on peut aisément 
 
 Il ne nous reste donc qu'à savoir comment appliquer les lois de Snell-Descartes à un rayon lumineux, et donc, savoir comment représenter un rayon lumineux.
 Cette représentation simple nous amène à la reformulation des lois de Snell-Descartes:
-\begin{propositionfr}{Lois de Snell-Descartes Vectorielles}
+\begin{propositionfr}{Lois de Snell-Descartes Vectorielles}{}
 	On se donne $\overrightarrow{l}$ un vecteur directeur de rayon de lumière, $\vec{n}$ la normale à la surface au point où elle est atteinte.
 	On garde les notations de \ref{thm:snelldescartes1}.
 	On a:
@@ -338,6 +340,7 @@ Le modèle de l'optique géométrique ne détaille pas comment la puissance véh
 	\begin{description}
 		\item[\color{vulm} Coefficient en réflexion] \color{black} On définit le coefficient de réflexion en puissance $R$ comme le rapport de la puissance véhiculée par l'onde réfléchie sur celle de l'onde incidente.
 		\item[\color{vulm}{Coefficient en transmission}] \color{black} On définit le coefficient de transmission en puissance $T$ comme le rapport de la puissance véhiculée par l'onde réfractée sur celle de l'onde incidente.
+		\item[\color{vulm} Coefficient en absorption] \color{black} On définit le coefficient d'absorption en puissance $A$ comme le rapport de la puissance véhiculée par l'onde absorbée sur celle de l'onde incidente.
 	\end{description}
 \end{définition}
 \begin{remarque}{Conservation de la puissance ?}{}
@@ -346,8 +349,17 @@ Le modèle de l'optique géométrique ne détaille pas comment la puissance véh
 	Dans le cas contraire, par exemple pour un objet opaque, on a $R + T < 1$.
 \end{remarque}
 
-% Paragraphe sur couleur <-> Puissance absorbée
-En pratique, on peut
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.4]{BilanRadiatif.png}
+\caption{Bilan radiatif}
+\end{figure}
+
+En pratique, on peut relier les coefficients d'absorption et de transmission aux longueurs d'ondes et donc aux couleurs. Dans le cadre d'un dioptre, on a :
+$$\begin{array}{cc}
+R = \left(\frac{n_1-n_2}{n_1+n_2}\right)^2 & T = \frac{4n_1n_2}{(n_1+n_2)^2}
+\end{array}$$
+avec (d'après la loi de Cauchy) $n(\lambda) = A + \frac{B}{\lambda^2}$ : on a donc un lien entre la connaissance des coefficients de réflexion/réfraction et la couleur du rayon : c'est ce procédé qui sera utilisé dans le cadre du Ray Tracing pour trouver la couleur du pixel coloré.
 
 Il suffit donc de savoir la direction initiale d'un rayon et les représentations de tous les objets dans l'environnement pour pouvoir calculer la trajectoire complète d'un rayon.
 
@@ -361,7 +373,7 @@ En particulier, on va supposer qu'on peut aisément les représenter par des tri
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[axis equal, scale=2, axis lines = none]
-			% \addplot3 [patch] file {Images/camel.dat}; % TODO: UNCOMMENT
+			\addplot3 [patch] file {Images/camel.dat};
 		\end{axis}
 	\end{tikzpicture}
 	\caption{Triangulation d'un Chameau}
