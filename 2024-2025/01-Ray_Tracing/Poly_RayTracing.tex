@@ -158,7 +158,6 @@ Le trajet de la lumière ne dépend pas du sens de parcours
 	Ceci s'illustre car le milieu est homogène et isotrope.
 \end{proof}
 
-
 \subsection{Principe du Ray Tracing}
 Considérons une lampe qui éclaire notre chameau. On va s'intéresser à la manière dont un observateur extérieur peut voir le chameau.
 Un observateur extérieur ne voit une surface que si celle-ci réfléchit la lumière vers son \oe il.
@@ -166,10 +165,10 @@ Un observateur extérieur ne voit une surface que si celle-ci réfléchit la lum
 L'idée naïve est de choisir un pixel de l'écran, et de déduire la marche des rayons lumineux qui l'atteignent.
 \begin{figure}[H]
 	\centering
-\begin{tikzpicture}
+	\begin{tikzpicture}[scale=.8]
 		% Coordinates
 		\coordinate (O) at (4,4);
-		\coordinate (P) at (4,8);
+		\coordinate (P) at (4,6);
 		\coordinate (P') at (4,1);
 		\coordinate (A) at (7.5,1);
 		\coordinate (D) at (1.5,1.5);
@@ -187,9 +186,9 @@ L'idée naïve est de choisir un pixel de l'écran, et de déduire la marche des
 		\draw[lined] (O) -- (P');
 
 		% Reflectors
-		\drawreflector{2.8}{120}{line};
-		\cfill{2.8}{120};
-		\drawreflector{2.6}{30}{lined};
+		\drawreflector{1.8}{120}{line};
+		\cfill{1.8}{120};
+		\drawreflector{1.8}{30}{lined};
 
 		\redrawreflector{1.5}{120}{line};
 		\recfill{1.5}{120};
@@ -221,10 +220,10 @@ Le problème ici est qu'on doit tracer la marche d'un grand nombre de rayons pou
 Pour nous sauver, le principe de retour inverse de la lumière vient à notre rescousse ! En effet, il suffit de tracer les rayons dirigés de l'\oe il vers le chameau, et ensuite voir si le rayon intercepte notre source lumineuse.
 \begin{figure}
 	\centering
-\begin{tikzpicture}
+	\begin{tikzpicture}[scale=.8]
 		% Coordinates
 		\coordinate (O) at (4,4);
-		\coordinate (P) at (4,8);
+		\coordinate (P) at (4,6);
 		\coordinate (P') at (4,1);
 		\coordinate (A) at (7.5,1);
 		\coordinate (D) at (1.5,1.5);
@@ -239,9 +238,9 @@ Pour nous sauver, le principe de retour inverse de la lumière vient à notre re
 		\draw[lined] (O) -- (P');
 
 		% Reflectors
-		\drawreflector{2.8}{120}{line};
-		\cfill{2.8}{120};
-		\drawreflector{2.6}{30}{lined};
+		\drawreflector{1.8}{120}{line};
+		\cfill{1.8}{120};
+		\drawreflector{1.8}{30}{lined};
 
 		\redrawreflector{1.5}{120}{line};
 		\recfill{1.5}{120};
@@ -256,7 +255,7 @@ Pour nous sauver, le principe de retour inverse de la lumière vient à notre re
 		% Viewing Screen
 		\drawscreen{1}{50}{line, black, double distance = 2pt, double = black!30};
 		\node at (8.2, .8) {Écran};
-		\node at ($(P) + (0, .2)$) {Source Lumineuse};
+		\node at ($(P) + (0, .4)$) {Source Lumineuse};
 	\end{tikzpicture}
 	\caption{PRIL: La source est l'écran, l'écran est la source.}
 \end{figure}
@@ -436,7 +435,7 @@ Cette représentation simple nous amène à la reformulation des lois de Snell-D
 	\begin{description}
 		\item[Réfraction] On a:
 			\begin{equation}
-				\vec{v}_{réfracté} = \frac{n_{1}}{n_{2}}\vec{l} + \left(\frac{n_{1}}{n_{2}}\cos i_{1} - \cos i_{2}\right)
+				\vec{v}_{réfracté} = \frac{n_{1}}{n_{2}}\vec{l} + \left(\frac{n_{1}}{n_{2}}\cos i_{1} - \cos i_{2}\right) \vec{n}
 				\label{snelldescartesrefraction}
 			\end{equation}
 		\item[Réflexion] On a:
@@ -491,7 +490,7 @@ En particulier, on va supposer qu'on peut aisément les représenter par des tri
 	\centering
 	\begin{tikzpicture}
 		\begin{axis}[axis equal, scale=2, axis lines = none]
-			% \addplot3 [patch] file {Images/camel.dat};
+			\addplot3 [patch] file {Images/camel.dat};
 		\end{axis}
 	\end{tikzpicture}
 	\caption{Triangulation d'un Chameau}
