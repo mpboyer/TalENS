@@ -1,7 +1,7 @@
 \documentclass{beamercours}
 \title{Cours TalENS 2024-2025}
-\subtitle{Lumière, chameau et triangles}
-\author{Matthieu Boyer \& Clément Allard}
+\subtitle{Malédiction, \textit{My Little Pony} et Égypte}
+\author{Clément Allard \& Matthieu Boyer}
 \definecolor{mint}{HTML}{9ffeb0}
 
 \newcommand{\point}[3]{\draw (#1 -.1, #2 -.1) -- (#1 + .1, #2 + .1);
@@ -39,7 +39,6 @@
 
 \renewcommand*{\K}{\mathbb{K}}
 \graphicspath{{./Images/}}
-\usepackage{siunits}
 \usepackage[utf8]{inputenc}
 \usepackage[pdftex,outline]{contour}
 
@@ -48,7 +47,8 @@
 \begin{frame}{Plan}\tableofcontents[sectionstyle=show]
 \end{frame}
 
-\section*{Introduction}
+\section{Faire briller un chameau ?}
+\subsection{La lumière, kézako ?}
 
 \begin{frame}
 	\frametitle{Un exemple : Doom}
@@ -57,9 +57,6 @@
         \caption{Jeu vidéo Doom}
     \end{figure}
 \end{frame}
-
-\section{Faire briller un chameau de mille feux ?}
-\subsection{La lumière, kézako ?}
 
 \begin{frame}
 	\frametitle{Rayons lumineux}
@@ -126,16 +123,18 @@ En pratique, on peut associer à chaque longueur d'onde une couleur, comme le mo
 \end{remarque}}
 \end{frame}
 
-\section{Comment un écran voit-il un chameau ?}
+\section{Comment un écran voit-il ?}
 \subsection{Propagation de la lumière}
 
 \begin{frame}
 	\frametitle{MTHI et interface}
 	\only<1>{\begin{définition}{MTHI - Milieux Transparents Homogènes Isotropes}{}
-On s'intéresse à des milieux qui sont :\\
-- Transparents : l'énergie lumineuse n'est pas absorbée par le milieu;\\
-- Homogènes : les propriétés du milieu ne dépendent pas du point choisi;\\
-- Isotropes : les propriétés du milieu ne dépendent pas de la direction du rayon lumineux.
+On s'intéresse à des milieux qui sont :
+\begin{description}
+	\item[Transparents:] l'énergie lumineuse n'est pas absorbée par le milieu;
+	\item[Homogènes:] les propriétés du milieu ne dépendent pas du point choisi;
+	\item[Isotropes:] les propriétés du milieu ne dépendent pas de la direction du rayon lumineux.
+\end{description}
 \end{définition}}
 \only<2>{
 \begin{définition}{Dioptre}{}
@@ -169,8 +168,10 @@ L'indice optique du vide vaut $1$, celui de l'air $1.0003$, celui de l'eau $1.33
 \begin{frame}
 \frametitle{Lumière dans un MTHI (1)}
 \begin{théorème}{Propagation de la lumière dans les MTHI}{}
-- Les rayons lumineux sont des droites;\\
-- Les rayons lumineux se propagent indépendamment entre eux.
+	\begin{itemize}
+		\item Les rayons lumineux sont des droites.
+		\item Les rayons lumineux se propagent indépendamment entre eux.
+	\end{itemize}
 \end{théorème}
 \begin{proof}
 	On prouvera un de ces points ultérieurement.
@@ -244,20 +245,20 @@ L'idée naïve est de choisir un pixel de l'écran, et de déduire la marche des
 
 		% Viewing Screen
 		\drawscreen{1}{50}{line, black, double distance = 2pt, double = black!30};
-		\node at (8.2, .8) {Écran};
+		\node at (8.7, .8) {Écran};
 	\end{tikzpicture}
 	\caption{Principe du Ray Tracing: trouver les rayons qui atteignent un point précis.}
 \end{figure}
 \end{frame}
 \begin{frame}
 \frametitle{Problème}
-Le problème ici est qu'on doit tracer la marche d'un grand nombre de rayons pour avoir une image de bonne résolution, sachant que la plupart des rayons n'atteindront jamais l'observateur !
+Le problème ici est qu'on doit tracer la marche d'un grand nombre de rayons pour avoir une image de bonne résolution, sachant que la plupart des rayons n'atteindront jamais l'observateur~!
 \begin{figure}[H]
 	\centering
 	\begin{tikzpicture}
 		\coordinate (O) at (0, 0);
 		\coordinate (S) at (1.41, 1.41);
-		\foreach \i in {-60, -45,...,60} { \draw[ray] (O) -- ({2*cos(\i)}, {2*sin(\i)}); }
+		\foreach \i in {-60, -45,...,60} { \draw[ray] (O) -- ({1.7*cos(\i)}, {1.7*sin(\i)}); }
 		\draw[line, black, double distance = 2pt, double = black!30] (-{1*cos(135)}+1.451, -{1*sin(135)+1.451}) -- ({1*cos(135)+1.451}, {1*sin(135)+1.451});
 	\end{tikzpicture}
 	\caption{Rayons Passant par un Point}
@@ -324,7 +325,7 @@ Donc, pour calculer la répartition de lumière sur l'écran (et donc la couleur
 \end{frame}
 
 \section{Implémentation pratique}
-\subsection{Comment prédire la trajectoire de la lumière ?}
+\subsection{Prédire la lumière ?}
 
 \begin{frame}
 \frametitle{Règle fondamentale}
@@ -424,9 +425,8 @@ On note $(AB) = nAB$ le chemin optique. Le principe de Fermat s'écrit de maniè
 \end{frame}
 \begin{frame}
 \frametitle{Produit vectoriel}
-On introduit un opérateur simple qui va nous servir à calculer la normale à une surface:
 \only<1>{\begin{définition}{Produit Vectoriel}{}
-	Si $u, v \in \R^{3}$, on définit le produit vectoriel $u \times v$ de $u$ et $v$ comme le vecteur orthogonal à $u$ et $v$, de norme $\norm{u}\cdot\norm{v}\cdot\sin(\hat{u, v})$ et orienté selon la règle de la main droite:
+	Si $u, v \in \R^{3}$, on définit le produit vectoriel $u \times v$ de $u$ et $v$ comme le vecteur orthogonal à $u$ et $v$, de norme $\norm{u}·\norm{v}·\sin(\hat{u, v})$ et orienté selon la règle de la main droite:
 	\begin{equation*}
 		u \times v = \begin{pmatrix}
 			u_{2}v_{3} - u_{3}v_{2}\\
@@ -453,18 +453,19 @@ Dans le cas d'un triangle dont on connaît les trois côtés, on peut aisément 
 \end{frame}
 
 \begin{frame}
-\frametitle{Snell-Descartes vecteurs édition}
+\frametitle{Snell-Descartes Vecteurs Édition}
 \resizebox{300pt}{!}{\begin{propositionfr}{Lois de Snell-Descartes Vectorielles}{}
 	On se donne $\overrightarrow{l}$ un vecteur directeur de rayon de lumière, $\vec{n}$ la normale à la surface au point où elle est atteinte.
-	On garde les notations précédentes.
-	On a:
+	On garde les notations précédentes:
 	\begin{description}
 		\item[Réfraction] On a:
+			\vspace{-12pt}
 			\begin{equation}
 				\vec{v}_{\textrm{réfracté}} = \frac{n_{1}}{n_{2}}\vec{l} + \left(\frac{n_{1}}{n_{2}}\cos i_{1} - \cos i_{2}\right) \vec{n}
 				\label{snelldescartesrefraction}
 			\end{equation}
 		\item[Réflexion] On a:
+			\vspace{-12pt}
 			\begin{equation}
 				\vec{v}_{\textrm{réfléchi}} = \vec{l} + 2\cos i_{1}\vec{n}
 				\label{snelldescartesreflexion}
@@ -479,7 +480,7 @@ Dans le cas d'un triangle dont on connaît les trois côtés, on peut aisément 
 \frametitle{Coefficients}
 \begin{définition}{Coefficients de puissance}{}
 		\color{vulm} Coefficient en réflexion \color{black} On définit le coefficient de réflexion en puissance $R$ comme le rapport de la puissance véhiculée par l'onde réfléchie sur celle de l'onde incidente.
-		
+
 \end{définition}
 \only<2>{On définit de même les coefficients de transmission (pour l'onde réfractée) et d'absorption (pour l'onde absorbée)}
 \end{frame}
@@ -496,8 +497,15 @@ Dans le cas d'un triangle dont on connaît les trois côtés, on peut aisément 
 \frametitle{Conservation de la puissance (2)}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=.4]{BilanRadiatif.png}
-\caption{Bilan radiatif}
+	\begin{minipage}[c]{.6\textwidth}
+		\includegraphics[width=\linewidth]{BilanRadiatif}
+	\end{minipage}
+	\begin{minipage}{.1\textwidth}
+
+	\end{minipage}
+	\begin{minipage}[c]{.3\textwidth}
+		\caption{Bilan radiatif}
+	\end{minipage}
 \end{figure}
 
 \end{frame}
@@ -505,9 +513,11 @@ Dans le cas d'un triangle dont on connaît les trois côtés, on peut aisément 
 \begin{frame}
 \frametitle{La puissance au service de la couleur}
 En pratique, on peut relier les coefficients d'absorption et de transmission aux longueurs d'ondes et donc aux couleurs. Dans le cadre d'un dioptre, on a :
-$$\begin{array}{cc}
-R = \left(\frac{n_1-n_2}{n_1+n_2}\right)^2 & T = \frac{4n_1n_2}{(n_1+n_2)^2}
-\end{array}$$
+	\begin{equation*}
+		\begin{array}{cc}
+			R = \left(\frac{n_1-n_2}{n_1+n_2}\right)^2 & T = \frac{4n_1n_2}{(n_1+n_2)^2}
+		\end{array}
+	\end{equation*}
 La loi de Cauchy donne $n(\lambda) = A + \frac{B}{\lambda^2}$ : on a donc un lien entre la connaissance des coefficients de réflexion/réfraction et la couleur du rayon.
 \end{frame}
 \begin{frame}
@@ -517,19 +527,19 @@ Il suffit donc de savoir la direction initiale d'un rayon et les représentation
 
 \subsection{Le Chameau et l'Espace}
 
-%\begin{frame}
-%\frametitle{Chameau triangulé}
-%\begin{figure}[h]
-%	\centering
-%	\begin{tikzpicture}
-%		\begin{axis}[axis equal, scale=2, axis lines = none]
-%			\addplot3 [patch] file {camel.dat};
-%		\end{axis}
-%	\end{tikzpicture}
-%	\caption{Triangulation d'un Chameau}
-%	\label{fig:camel}
-%\end{figure}
-%\end{frame}
+\begin{frame}
+\frametitle{Chameau triangulé}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+	\begin{axis}[axis equal, scale=2, axis lines = none]
+		% \addplot3 [patch] file {Images/camel.dat};
+	\end{axis}
+\end{tikzpicture}
+\caption{Triangulation d'un Chameau}
+\label{fig:camel}
+\end{figure}
+\end{frame}
 % TODO : KAPUTT
 
 \begin{frame}
@@ -570,6 +580,7 @@ Alors $I$ est dans le triangle si et seulement si les trois $\beta_{i}$ sont ent
 \begin{frame}
 \frametitle{... vécurent heureux...}
 \begin{algorithm}[H]
+	\scriptsize
 	\caption{Ray Tracing}
 	\begin{algorithmic}
 		\Function{\tt ray\_cast}{r, scène, profondeur}
