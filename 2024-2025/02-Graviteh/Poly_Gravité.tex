@@ -28,7 +28,8 @@ Le monde d'Aristote est composé de 4 éléments : l'air, le feu, la terre et l'
 On peut se demander quelle est l'origine de cette sorcellerie, mais lors de ses tentatives d'explication du monde, Aristote a mis un point d'honneur à créer une théorie cohérente : l'explication de la gravité n'entre pas en conflit avec un autre domaine de la physique, ce qui explique cette séparation sublunaire/supralunaire.
 \end{remarque}{}
 
-Une deuxième observation d'Aristote est la suivante : les objets lourds (tels que la terre et l'eau) chutent et les objets légers (air et feu) flottent. Ainsi la gravité pousserait les éléments lourds vers la Terre et les éléments légers vers l'extérieur de la Terre. De plus, pour Aristote, la Terre est au centre de l'univers : la terre étant plus lourde que le feu, la Terre se doit d'être le centre (par rapport à une étoile). Récapitulons :
+Une deuxième observation d'Aristote est la suivante : les objets lourds (tels que la terre et l'eau) chutent et les objets légers (air et feu) flottent. Ainsi la gravité pousserait les éléments lourds vers la Terre et les éléments légers vers l'extérieur de la Terre. De plus, pour Aristote, la Terre est au centre de l'univers : la terre étant plus lourde que le feu, la Terre se doit d'être le centre (par rapport à une étoile). 
+Récapitulons :
 
 \begin{propositionfr}{Gravité selon Aristote}{}
 La gravité agit de la manière suivante :
@@ -93,8 +94,9 @@ Johannes Kepler, en se basant sur les travaux de Tycho Brahe, essaye d'expliquer
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
-	\draw [domaine={-3}{3}, samples=800] plot (\x, {2*sqrt(1-(\x/3)^2)});
-	\draw plot [domaine={-3}{3}, samples=800] (\x, {-2*sqrt(1-(\x/3)^2)});
+  \draw (0, 0) ellipse (3cm and 2cm) {};
+	% \draw [domaine={-3}{3}, samples=800] plot (\x, {2*sqrt(1-(\x/3)^2)});
+	% \draw plot [domaine={-3}{3}, samples=800] (\x, {-2*sqrt(1-(\x/3)^2)});
 	\draw[<->] (-3, 0) -- (0, 0);
 	\draw (-1.5, 0) node[above]{$a$};
 	\point{-2.236}{0}{$F$};
@@ -182,7 +184,7 @@ On a donc que tout référentiel qui se déplace à une vitesse constante par ra
 
 Pour que cela vérifie Kepler, il faut (ce qu'on peut montrer avec les trois lois de Kepler) que $f(d) = \frac{1}{d^2}$, et Newton montre ainsi que $F$ vérifie les trois lois de Kepler ! Une bonne première étape.\\
 
-Et sur Terre, ça donne quoi ? Quelque chose qui a été observé par Galilée est l'universalité de la chute des corps, qui permet donc de dire que $a_1 = a_2$ pour deux corps différents en chute libre. On a donc 
+Et sur Terre, ça donne quoi ? Quelque chose qui a été observé par Galilée est l'universalité de la chute des corps, qui permet donc de dire que $a_1 = a_2$ pour deux corps différents en chute libre. On a donc
 $$F_1\sim \frac{m_{G1} m_{GT}}{R^2} \sim m_{I1}a_1$$
 d'où sachant $a_1 = a_2$ on a $\frac{m_G}{m_I} = \textrm{cste}$.
 Cette propriété est très intéressante car on a donc $m_G\sim m_I$ et en faisant un choix judicieux d'unités on a $m_G = m_I$ : on appelle ceci le principe d'équivalence faible.\\
