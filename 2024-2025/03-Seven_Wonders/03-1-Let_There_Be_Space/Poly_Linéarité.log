@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.6.29)  6 JAN 2025 19:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.6.29)  7 JAN 2025 17:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./Poly_Linéarité_1.tex
-(Poly_Linéarité_1.tex
+**./Poly_Linéarité.tex
+(Poly_Linéarité.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
 (classe.cls
@@ -1433,8 +1433,8 @@ contour: Using driver file `pdftex.cnt'.
 (C:\Users\cleme\AppData\Local\Programs\MiKTeX\tex/latex/contour\pdftex.cnt
 File: pdftex.cnt 2004/11/18 v2.14 Print contoured text (HH, MH)
 ))
-(Poly_Linéarité_1.aux)
-\openout1 = `Poly_Linéarité_1.aux'.
+(Poly_Linéarité.aux)
+\openout1 = `Poly_Linéarité.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
 LaTeX Font Info:    ... okay on input line 16.
@@ -1559,11 +1559,11 @@ Option `squaren' provided!
  Command \squaren defined by SIunits package!
 
 \c@lstlisting=\count434
-No file Poly_Linéarité_1.toc.
+No file Poly_Linéarité.toc.
 Package hyperref Info: Link coloring OFF on input line 16.
-(Poly_Linéarité_1.out) (Poly_Linéarité_1.out)
+(Poly_Linéarité.out) (Poly_Linéarité.out)
 \@outlinefile=\write4
-\openout4 = `Poly_Linéarité_1.out'.
+\openout4 = `Poly_Linéarité.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
@@ -1623,7 +1623,7 @@ LaTeX Font Info:    Trying to load font information for U+stmry on input line 1
 6.
 
 (C:\Users\cleme\AppData\Local\Programs\MiKTeX\tex/latex/stmaryrd\ustmry.fd)
-<ens_psl.pdf, id=51, 136.57294pt x 55.74188pt>
+<ens_psl.pdf, id=55, 136.57294pt x 55.74188pt>
 File: ens_psl.pdf Graphic file (type pdf)
 <use ens_psl.pdf>
 Package pdftex.def Info: ens_psl.pdf  used on input line 16.
@@ -1643,47 +1643,53 @@ pData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}{C:/Users/cleme/AppDa
 ta/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/cleme/AppDa
 ta/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/cleme/AppDa
 ta/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc} <./ens_psl.pdf>]
+[2]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 77.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 77.
+(hyperref)                removing `math shift' on input line 97.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 77.
+(hyperref)                removing `superscript' on input line 97.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 88.
+(hyperref)                removing `math shift' on input line 97.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 88.
+(hyperref)                removing `math shift' on input line 108.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 88.
+(hyperref)                removing `superscript' on input line 108.
 
-[2] [3] [4{C:/Users/cleme/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-m
-athex.enc}] [5] (Poly_Linéarité_1.aux)
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 108.
+
+[3] [4{C:/Users/cleme/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathe
+x.enc}] [5]
+Underfull \hbox (badness 10000) in paragraph at lines 227--231
+
+ []
+
+[6] (Poly_Linéarité.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
-Package rerunfilecheck Info: File `Poly_Linéarité_1.out' has not changed.
-(rerunfilecheck)             Checksum: 15AC4918F11C1AC9D6277F2DF5D7E39B;1767.
+Package rerunfilecheck Info: File `Poly_Linéarité.out' has not changed.
+(rerunfilecheck)             Checksum: 75608BA3837A8DAA696A98ACE31D8691;2067.
  ) 
 Here is how much of TeX's memory you used:
- 47369 strings out of 474486
- 1103007 string characters out of 5743755
- 1947542 words of memory out of 5000000
- 68798 multiletter control sequences out of 15000+600000
+ 47386 strings out of 474486
+ 1103248 string characters out of 5743755
+ 1945542 words of memory out of 5000000
+ 68808 multiletter control sequences out of 15000+600000
  615346 words of font info for 98 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 117i,14n,121p,795b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 117i,14n,121p,793b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/cleme/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pf
 b><C:/Users/cleme/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pf
 b><C:/Users/cleme/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pf
@@ -1700,9 +1706,9 @@ s/cleme/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/User
 s/cleme/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users
 /cleme/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb>
-Output written on Poly_Linéarité_1.pdf (5 pages, 301439 bytes).
+Output written on Poly_Linéarité.pdf (6 pages, 317069 bytes).
 PDF statistics:
- 195 PDF objects out of 1000 (max. 8388607)
- 39 named destinations out of 1000 (max. 500000)
- 118 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 209 PDF objects out of 1000 (max. 8388607)
+ 46 named destinations out of 1000 (max. 500000)
+ 126 words of extra memory for PDF output out of 10000 (max. 10000000)
 
