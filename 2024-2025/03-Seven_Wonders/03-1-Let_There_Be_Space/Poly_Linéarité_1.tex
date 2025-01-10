@@ -1,6 +1,6 @@
 \documentclass{classe}
-\title{Let there be space\\ \small Cours TalENS n°3}
-\author{Clément Allard - Matthieu Boyer}
+\title{Les Sept Merveilles de la Linéarité\\ \small Cours TalENS n°3-4}
+\author{Clément Allard --- Matthieu Boyer}
 \date{11 janvier 2025}
 
 \usepackage[pdftex,outline]{contour}
@@ -9,7 +9,7 @@
 \draw (#1 +.1, #2 -.1) -- (#1 - .1, #2 + .1);
 \draw (#1, #2) node[below right]{#3};}
 
-\renewcommand*{\K}{\mathbb{K}}
+\renewcommand*{\K}{\K}
 \graphicspath{{./Images/}}
 \tikzset { domaine/.style 2 args={domain=#1:#2} }
 
@@ -19,71 +19,106 @@
 
 \subsection{Ce qui marche déjà bien}
 
-Commençons avec un exemple simple : la géométrie dans le plan. Mais on va le voir d'un point de vue différent. On va se donner une origine $O$ et on va repérer chaque point par un vecteur : à un point $M$ on associera le vecteur $\overrightarrow{OM}$. Bon dans notre plan qu'est ce qu'on a le droit de faire (par exemple) :
+Commençons avec un exemple simple, la géométrie euclidienne dans le plan, et essayons de le formaliser de manière un peu abstraite. On va se donner une origine $O$ et on va repérer chaque point par un vecteur : à un point $M$ on associera le vecteur $\overrightarrow{OM}$. Que peut-on faire dans le plan ? Voici quelques réponses:
 
 \begin{itemize}
-	\item On a le droit d'ajouter deux vecteurs $\vec{u}$ et $\vec{v}$, on obtient un troisième vecteur qui est toujours dans le plan, et on a $\vec{u} + \vec{v} = \vec{v} + \vec{u}$;
-	\item Il existe un vecteur qui traduit le non déplacement $\vec{0}$;
-	\item À chaque vecteur $\vec{u}$, on peut associer un autre vecteur $\overrightarrow{-u}$ tel que $\vec{u} + \overrightarrow{-u} = \vec{0}$ : on parle d'opposé;
-	\item On a le droit de multiplier un vecteur par un nombre (on parle de multiplication par un scalaire);
-	\item On a $(\lambda + \mu)\vec{u} = \lambda\vec{u} + \mu\vec{u}$ (distributivité scalaire) et $\lambda(\vec{u}+\vec{v}) = \lambda\vec{u}+\lambda\vec{v}$ (distributivité vectorielle).
+	\item On a le droit d'ajouter deux vecteurs $\overrightarrow{u}$ et $\overrightarrow{v}$, on obtient un troisième vecteur qui est toujours dans le plan, et on a $\overrightarrow{u} + \overrightarrow{v} = \overrightarrow{v} + \overrightarrow{u}$, ce qui revient à les mettre bout à bout;
+	\item Il existe un vecteur qui traduit le non déplacement $\overrightarrow{0}$ appelé \emph{vecteur nul};
+	\item À chaque vecteur $\overrightarrow{u}$, on peut associer un autre vecteur $\overrightarrow{-u}$ tel que $\overrightarrow{u} + \overrightarrow{-u} = \overrightarrow{0}$ : on parle d'opposé, et cela revient à aller dans la direction opposé au vecteur de départ;
+	\item On a le droit de multiplier un vecteur par un nombre (on parle de multiplication par un scalaire), ce qui revient à l'agrandir;
+	\item On a $(\lambda + \mu)\overrightarrow{u} = \lambda\overrightarrow{u} + \mu\overrightarrow{u}$ (distributivité scalaire) et $\lambda(\overrightarrow{u}+\overrightarrow{v}) = \lambda\overrightarrow{u}+\lambda\overrightarrow{v}$ (distributivité vectorielle).
 \end{itemize}
 
 On peut décomposer les vecteurs sur des vecteurs dits de base, et on peut leur appliquer différentes opérations, comme une projection orthogonale ou bien une rotation selon un axe. Ce formalisme fonctionne très bien pour la géométrie dans le plan, et on peut l'étendre à plein d'autres concepts mathématiques.
+L'idée de ce cours est donc d'étudier un peu le concept d'espace vectoriel décrit ci-dessus, et de voir quelques une de ses plus belles applications.
 
 \subsection{Explorons l'inexploré !}
 
-\begin{théorème}{$\mathbb{R}$ existe}{}
-	Il existe un corps des réels noté $\mathbb{R}$ muni d'une addition $+$ et d'une multiplication $\times$.
-\end{théorème}
+Pour formaliser vraiment notre concept, il nous faut un petit outil abstrait, qui formalise la notion de nombre: la notion de \emph{corps}.
 
-\begin{remarque}{Keskecé un Corps ?}{}
-	Il y a deux versions :
-	\begin{enumerate}
-		\item La version pragmatique : c'est un ensemble qui nous permet de faire des additions, soustractions, des multiplications et des divisions (sauf par $0$, où $0$ est défini comme $x+0 = 0+x = x$ pour $x$ un élément du corps)
-		\item La version vraie mais plus longue : voir Wikipedia
-	\end{enumerate}
+Un corps est un ensemble qui nous permet de faire des additions, soustractions, des multiplications et des divisions (sauf par $0$, où $0$ est défini comme $x+0 = 0+x = x$ pour $x$ un élément du corps).
+
+\begin{définition}{Notion de Corps}{}
+	Un ensemble $\K$ muni de deux lois de produit interne $+, \times$ (c'est à dire qui prennent deux éléments du corps et renvoient un élément du corps), est un corps si, et seulement si:
+	\begin{itemize}
+		\item L'addition est commutative: $\forall \lambda, \mu \in \K, \lambda + \mu = \mu + \lambda$
+		\item Il existe un nombre $0_{\K}$ tel que $\forall \lambda, \lambda + 0_{\K}$, et $\forall \lambda, \exists -\lambda, \lambda + -\lambda = 0_{\K}$. On dit que $\left(\K, +\right)$ est un groupe et qu'il est de plus abélien.
+		\item Il existe un nombre $1_{\K}$ tel que $\forall \lambda, \lambda \times 1_{\K} = \lambda = 1_{\K} \times \lambda$ et de plus, $\forall \lambda \in \K\setminus 0_{\K}, \exists \lambda^{-1}, \lambda^{-1} \times \lambda = \lambda \times \lambda^{-1} = 1_{K}$. On dit que $\left(\K, \times\right)$ est un groupe.
+		\item On a toujours: $\lambda \times \left( a + b \right) = \lambda \times a + \lambda \times b$ et $\left( a + b\right)\times \lambda = a\times \lambda + b\times \lambda$.
+	\end{itemize}
+\end{définition}
+
+\begin{remarque}{Corps Commutatif}{}
+	Dans la tradition mathématique française, on ne demande pas qu'un corps $\left( \K, +, \times \right)$ soit commutatif, c'est-à-dire qu'on n'a pas nécessairement une multiplication commutative.
+	Un exemple de corps non commutatif est celui noté $\H$ des quaternions. On ne détaillera pas sa construction ici.
 \end{remarque}
 
-\begin{définition}{$\mathbb{R}$-Espace Vectoriel}{}
+\begin{théorème}{$\R$ existe}{}
+	Il existe un corps des réels noté $\R$ muni d'une addition $+$ et d'une multiplication $\times$.
+\end{théorème}
+\begin{proof}
+	Si vous ne connaissez pas les opérations qui définisse $\R$ il est temps de s'inquiéter. Cependant, si vous cherchez à vérifier que $\R$ existe, il vaut mieux chercher des informations sur la construction de l'ensemble $\R$ comme complété de l'ensemble des suites sur $\Q$.
+\end{proof}
+
+Nous pouvons donc enfin formaliser la notion de $\R$-espace vectoriel dont nous avons parlé en introduction.
+
+\begin{définition}{$\R$-Espace Vecttoriel}{}
 	Soit $E$ un ensemble. Il existe une addition $+$ et un produit extérieur $\cdot$ tels que
 	\begin{itemize}
 		\item On peut faire des additions sur $E$, avec existence d'un élément neutre $0_E$ et d'un opposé (que l'on note $-u$) : on a $u+v = v+u$, $u+(v+w) = (u+v)+w$, $u+0=u$ et $u + (-u) = 0$ pour $u$, $v$ et $w$ trois éléments de $E$.
-		\item On peut multiplier des vecteurs par des scalaires avec le produit extérieur : $\lambda\cdot x$ est encore un élément de $E$ pour $\lambda \in \mathbb{R}$.
+		\item On peut multiplier des vecteurs par des scalaires avec le produit extérieur : $\lambda\cdot x$ est encore un élément de $E$ pour $\lambda \in \R$.
 		\item La multiplication se comporte bien avec l'addition : on peut distribuer des scalaires et des vecteurs, multiplier par $1$ un vecteur ne le change pas : on a $(\lambda + \mu)\cdot u = \lambda\cdot u + \mu\cdot u$ (distributivité scalaire) et $\lambda\cdot (u+v) = \lambda \cdot u+\lambda\cdot v$ (distributivité vectorielle), $1\cdot u = u$, $(\lambda\times\mu)\cdot u = \lambda\cdot (\mu\cdot u)$ pour $u$, et $v$ éléments de $E$ et $\lambda$ et $\mu$ des réels.
 	\end{itemize}
-	Alors $E$ est un $\mathbb{R}$-espace vectoriel.
+	Alors $E$ est un $\R$-espace vectoriel.
 \end{définition}
 
-\begin{définition}{Vecteurs et scalaires}{}
-	Les éléments de $E$ sont appelés vecteurs et ceux de $\mathbb{R}$ des scalaires.
+Il est bien évidemment possible de remplacer $\R$ par un corps quelconque $\K$ pour obtenir une notion de $\K$-espace vectoriel.
+Vous verrez par exemple en mathématiques expertes l'ensemble $\C$ des nombres complexes, qu'on peut également munir d'une structure de corps, ce qui permet de définir des $\C$-espaces vectoriels.
+Quand le corps est évident (dans la suite on ne travaillera que sur des $\R$-espaces, par exemple), ou alors qu'il n'est pas vraiment utilisé, on parle juste d'espace vectoriel.
+
+\begin{définition}{Vectteurs et scalaires}{}
+	Les éléments de $E$ sont appelés vecteurs et ceux de $\R$ des scalaires.
 \end{définition}
 
-\begin{définition}{$\mathbb{R}$-Espace Vectoriel : ce qu'il faut en retenir}{}
-	Soit $E$ un ensemble. Il existe une addition $+$ et un produit extérieur $\cdot$ tels que
-	\begin{itemize}
+Finalement, si on veut résumer la notion de $\R$-espace vectoriel, on en arrive simplement à:
+Soit $E$ un ensemble. Il existe une addition $+$ et un produit extérieur $\cdot$ telsque
+\begin{itemize}
 		\item On peut faire des additions sur $E$, avec existence d'un élément neutre $0_E$ tel que $x + 0_E = 0_E + x = x$ pour $x$ dans $E$, et d'un opposé.
-		\item On peut multiplier des vecteurs par des scalaires avec le produit extérieur : $\lambda\cdot x$ est encore un élément de $E$ pour $\lambda \in \mathbb{R}$.
+		\item On peut multiplier des vecteurs par des scalaires avec le produit extérieur : $\lambda\cdot x$ est encore un élément de $E$ pour $\lambda \in \R$.
 		\item La multiplication se comporte bien avec l'addition : on peut distribuer des scalaires et des vecteurs, multiplier par $1$ un vecteur ne le change pas.
-	\end{itemize}
-	Alors $E$ est un $\mathbb{R}$-espace vectoriel.
-\end{définition}
+\end{itemize}
+Alors $E$ est un $\R$-espace vectoriel.
 
-\subsection{Revenons sur $\mathbb{R}^2$}
+\subsection{Revenons sur $\R^2$}
 
-Essayons de montrer que $\mathbb{R}^2$ (appelé précédemment "Géométrie dans le plan") est un $\mathbb{R}$-espace vectoriel. On note les éléments de $\mathbb{R}^2$ sous la forme suivante : $(x, y)$ où $x\in\mathbb{R}$ et $y\in\mathbb{R}$.
+Essayons de montrer que $\R^2$ ("l'espace vectoriel de la géométrie euclidienne dans le plan") est un $\R$-espace vectoriel. On note les éléments de $\R^2$ sous la forme suivante : $(x, y)$ où $x\in\R$ et $y\in\R$.
 
-\begin{enumerate}
-	\item En revenant à l'intuition géométrique du début (les points sont assimilés à des vecteurs par rapport à l'origine), quelles seraient les opérations d'addition et de produit extérieur que l'on pourrait prendre ?
-	\item Vérifions que ces opérations sont compatibles pour montrer que $\mathbb{R}^2$ avec ces opérations est un espace vectoriel.
-\end{enumerate}
+%\begin{enumerate}
+%	\item En revenant à l'intuition géométrique du début (les points sont assimilés à des vecteurs par rapport à l'origine), quelles seraient les opérations d'addition et de produit extérieur que l'on pourrait prendre ?
+%	\item Vérifions que ces opérations sont compatibles pour montrer que $\R^2$ avec ces opérations est un espace vectoriel.
+%\end{enumerate}
+
+Si on prend pour l'opération d'addition sur $\R^{2}$ la fonction $+: \left( x_{1}, y_{1} \right), \left( x_{2}, y_{2} \right) \in \left(\R^{2}\right)^{2} \mapsto \left( x_{1} + x_{2}, y_{1} + y_{2} \right)$, et pour le produit extérieur $\cdot: \lambda, (x, y) \in \R\times \R^{2} \mapsto \left( \lambda x, \lambda y \right)$, on munit bien $\R^{2}$ d'une structure d'espace vectoriel.
+On vérifie aisément les propriétés demandées, mais surtout, on vérifie que c'est bien la même que celle décrite en introduction, en prenant $O = \left( 0, 0 \right)$.
+
+\begin{remarque}{Affinité de $\R^{2}$}{}
+	Le type d'espace obtenu en reprenant la construction de l'introduction mais sans spécifier de point particulier "origine" est appelé \emph{espace affine}.
+	La construction définie ci-dessus est alors le vectorialisé en $\left(0, 0\right)$ d'un espace affine sur l'ensemble $\R^{2}$.
+	Cette notion est toutefois bien plus compliquée à formaliser et demande plus de pratique de la notion de groupe.
+\end{remarque}
 
 \subsection{Autres exemples d'espaces vectoriels}
 
-\subsubsection{$\mathbb{R}^n$}
+\subsubsection{$\R^n$}
 
-\begin{définition}{Espace/Espace-Temps}{}
-On peut définir de même ce qu'on appelle "espace" en géométrie : $\mathbb{R}^3$ dont les vecteurs s'écrivent sous la forme $(x, y, z)$, et aller plus loin avec par exemple l'espace-temps $\mathbb{R}^4$ de vecteurs $(x, y, z, t)$ etc. On garde les mêmes lois que pour $\mathbb{R}^2$ : on a $(x, y, z) + (x', y', z') = (x+x', y+y', z+z')$ et $\lambda(x, y, z) = (\lambda x, \lambda y, \lambda z)$
+On peut définir de même ce qu'on appelle "espace 3D" en géométrie euclidienne: $\R^3$ dont les vecteurs s'écrivent sous la forme $(x, y, z)$, et aller plus loin avec par exemple l'espace-temps $\R^4$ de vecteurs $(x, y, z, t)$ etc. On garde les mêmes lois que pour $\R^2$ : on a $(x, y, z) + (x', y', z') = (x+x', y+y', z+z')$ et $\lambda(x, y, z) = (\lambda x, \lambda y, \lambda z)$.
+
+\begin{définition}{Espace Euclidiens Réels de Dimension Finie}{}
+	Plus généralement, si $n \in \N^{*}$, on définit une structure d'espace vectoriel sur $\R^{n}$ de la même manière que précédemment:
+	\begin{itemize}
+		\item $\left( x_{1}, \ldots, x_{n} \right) + \left( y_{1}, \ldots, y_{n} \right) = \left( x_{1} + y_{1}, \ldots, x_{n} + y_{n} \right)$.
+		\item $\lambda \cdot \left( x_{1}, \ldots, x_{n} \right) = \left( \lambda \cdot x_{1}, \ldots, \lambda \cdot x_{n} \right)$.
+	\end{itemize}
 \end{définition}
 
 \subsubsection{Les fonctions réelles}
@@ -93,28 +128,47 @@ On appelle fonction réelle à valeurs réelles toute fonction qui a un réel as
 \end{définition}
 
 \begin{théorème}{Espace vectoriel des fonctions réelles à valeurs réelles}{}
-On définit $f+g$ pour $f$ et $g$ des fonctions à valeurs réelles par la relation $(f+g)(x) = f(x)+g(x)$ et $\lambda f$ par $(\lambda f)(x) = \lambda f(x)$. On obtient que l'ensemble des fonctions réelles muni des deux opérations est un $\mathbb{R}$-espace vectoriel.
+	On définit $f+g$ pour $f$ et $g$ des fonctions à valeurs réelles par la relation $(f+g)(x) = f(x)+g(x)$ et $\lambda f$ par $(\lambda f)(x) = \lambda f(x)$, autrement dit l'addition et la multiplication point à point.
+	On obtient que l'ensemble des fonctions réelles muni des deux opérations est un $\R$-espace vectoriel.
 \end{théorème}
 
 \subsection{Sous-espace vectoriel}
 
-\begin{définition}{Sous-espace vectoriel}{}
-	On dit que $F$ est un sous-espace vectoriel de $E$ si $F\subset E$ (c'est à dire que tout élément de $F$ appartient à $E$), que $F$ est stable par addition et produit externe (c'est à dire que l'addition et la multiplication par un scalaire d'éléments de $F$ donne un élément de $F$), et que $F$ se comporte comme un espace vectoriel avec l'addition et la multiplication externe de $E$.
-\end{définition}
+On va s'intéresser aux parties de $E$ qui profitent des propriétés géométriques des espaces vectoriels. Intuitivement, ce sont les parties de $E$ qu'on peut considérer comme des espaces vectoriels.
 
 \begin{example}{}
-	Par exemple, une droite passant par l'origine est un sous-espace vectoriel de $\mathbb{R}^2$.
+	Par exemple, une droite passant par l'origine est un sous-espace vectoriel de $\R^2$.
 \end{example}
 
-\begin{théorème}{Caractérisation}{}
-	De manière équivalente, $F$ est un sous-espace vectoriel de $E$ si et seulement si $0_E$ appartient à $F$ et que $F$ est stable par toute combinaison linéaire : pour tous $\lambda$, $\mu \in \mathbb{R}$ et $x$, $y\in F$, $\lambda x + \mu y \in F$.
-\end{théorème}
+\begin{définition}{Sous-Espace Vecttoriel}{}
+	$F \subseteq E$ est un sous-espace vectoriel de $E$ si et seulement si $0_E$ appartient à $F$ et que $F$ est stable par toute combinaison linéaire : pour tous $\lambda$, $\mu \in \K$ et $x$, $y\in F$, $\lambda x + \mu y \in F$.
+\end{définition}
+
+Un sous-espace vectoriel, c'est donc un espace vectoriel dans un espace vectoriel.
 
 \section{Liberté, bases et dimension}
 
 \begin{définition}{Famille}{}
-On appelle famille $(x_i)$ un ensemble ordonné d'éléments : on se donne $I$ un ensemble et pour tout élément de $i$ de $I$, on associe un élément $x_i$.
+	Une famille d'éléments indicée par un ensemble $I$ est un ensemble ordonné d'éléments $\left( x_{i} \right)_{i \in I}$.
+	On dira que la famille est finie si et seulement si $I$ est fini.
 \end{définition}
+
+Ceci nous permet de définir la portée/l'espace engendré d'une famille de vecteurs. C'est l'espace dans lequel on voudra faire de la géométrie, en sachant qu'on pourra profiter de la famille.
+
+\begin{définition}{Espace Vecttoriel Engendré}{}
+	L'espace vectoriel engendré $\Vect_{\K}\left( x_{i} \right)$ par une famille $\left( x_{i}\right)_{i\in I}$ est le plus petit espace vectoriel qui contient tous les $x_{i}$.
+\end{définition}
+
+\begin{propositionfr}{Caractérisation des Espaces Engendrés}{}
+	Soit $\mathcal{V}\left( x_{i} \right)_{i\in I}$ l'ensemble des sous-espaces vectoriels de $E$ qui contiennent la famille $\left(x_{i}\right)_{i\in I}$.
+	Alors, on a:
+	\begin{equation*}
+		\Vect_{\K}\left( x_{i} \right) = \bigcap_{F \in \mathcal{V}\left( x_{i} \right)} F = \left\{ \sum_{i\inI}\lambda_{i}x_{i}\ \middle\ \left(\lambda_{i}\right)_{i\in I} \in \K^{I}\right\}
+	\end{equation*}
+\end{propositionfr}
+\begin{proof}
+	Long, la flemme
+\end{proof}
 
 \begin{définition}{Famille libre, génératrice, base}{}
 \begin{itemize}
@@ -125,7 +179,7 @@ On appelle famille $(x_i)$ un ensemble ordonné d'éléments : on se donne $I$ u
 \end{définition}
 
 \begin{example}
-Dans $\mathbb{R}^2$, $((1, 0),(0, 1))$ forme une base de $\mathbb{R}^2$ : en effet, tout vecteur $(a, b)$ peut s'écrire sous la forme $a(1, 0) + b(0, 1)$ et si $(0, 0) = a(1, 0) + b(0, 1) = (a, b)$, alors on a nécessairement $a=b=0$
+Dans $\R^2$, $((1, 0),(0, 1))$ forme une base de $\R^2$ : en effet, tout vecteur $(a, b)$ peut s'écrire sous la forme $a(1, 0) + b(0, 1)$ et si $(0, 0) = a(1, 0) + b(0, 1) = (a, b)$, alors on a nécessairement $a=b=0$
 \end{example}
 
 \begin{remarque}{Comment retenir "avec les mains"}{}
@@ -166,7 +220,7 @@ Soient $E$ et $F$ deux espaces vectoriels, $(e_i)_{i\in I}$ une base de $E$ et $
 Ce théorème est essentiel car il permet de comprendre les applications linéaires en s'intéressant uniquement à l'image d'une base, car par linéarité on peut trouver la valeur de \textbf{n'importe quel} vecteur.
 \end{remarque}
 
-Donnons nous un exemple pour visualiser ceci : on considère $\mathbb{R}^3$ comme espace vectoriel de départ et d'arrivée : on prend $E = F = \mathbb{R}^3$. Comment peut-on décrire la rotation d'un d'angle $\pi$ autour de l'axe $z$ ? On utilise notre théorème précédent : on sait que $f(x) = -x$, $f(y) = -y$ ainsi que $f(z) = z$. Ensuite, on utilise notre théorème précédent : pour tout vecteur $u$, on a l'existence de scalaires tels que $u = \alpha x + \beta y + \gamma z$, et donc $f(u) = \alpha f(x) + \beta f(y) + \gamma f(z)$ ce qui donne donc $f(u) = -\alpha x - \beta y + \gamma z$
+Donnons nous un exemple pour visualiser ceci : on considère $\R^3$ comme espace vectoriel de départ et d'arrivée : on prend $E = F = \R^3$. Comment peut-on décrire la rotation d'un d'angle $\pi$ autour de l'axe $z$ ? On utilise notre théorème précédent : on sait que $f(x) = -x$, $f(y) = -y$ ainsi que $f(z) = z$. Ensuite, on utilise notre théorème précédent : pour tout vecteur $u$, on a l'existence de scalaires tels que $u = \alpha x + \beta y + \gamma z$, et donc $f(u) = \alpha f(x) + \beta f(y) + \gamma f(z)$ ce qui donne donc $f(u) = -\alpha x - \beta y + \gamma z$
 
 %TODO : figure sympa pour illustrer la rotation
 
