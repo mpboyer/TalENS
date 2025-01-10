@@ -271,6 +271,13 @@ Ensuite, on utilise notre théorème précédent: pour tout vecteur $u$, on a l'
 	On dit que deux espaces sont isomorphes si et seulement si il y a un isomorphisme entre les deux.
 \end{définition}
 
+\begin{propositionfr}{Opérations sur les Applications Linéaires}{}
+	Si $u, v$ sont deux applications linéaires, $\lambda, \mu \in \K$, alors, $\lambda u + \lambda v$, définie point à point, est une application linéaire.
+\end{propositionfr}
+\begin{proof}
+	On vérifie très facilement les axiomes.
+\end{proof}
+
 \subsection{Matrices}
 Commençons déjà par un théorème fondamental.
 
@@ -329,11 +336,36 @@ Dans la suite, on ne considèrera que des espaces de dimension finie.
 \end{définition}
 
 Le théorème \ref{thm:isomorphisme} décrit un isomorphisme entre les applications linéaires de $E$ dans $F$ et les familles de $m$ vecteurs appartenant à $F$.
-Ceci permet de démontrer immédiatement le théorème suivant:
+Ceci a pour corollaire immédiat le résultat suivant:
 \begin{théorème}{Isomorphisme Matrice Application}{}
-	Si $\B$, $\B'$ sont des bases de $E$ et $F$ respectivement
-\end{théorème}<++>
+	Si $\B$, $\B'$ sont des bases de $E$ et $F$ respectivement, alors $\Mat_{\B, \B'}\left( L\left( E:F \right) \right)$ est un espace vectoriel et $\Mat_{\B, \B'}$ est un isomorphisme.
+\end{théorème}
+
+En regardant ce que l'isomorphisme du théorème donne, on voit rapidement que les opérations sur les matrices coïncident avec les opérations sur les applications linéaires.
+La colonne $j$ de la matrice de l'application linéaire $u$ entre $\B$ et $\B'$ étant le vecteur des coordonnées de l'image par $u$ de $e_{j}$ dans $\B'$, on voit bien que la colonne $j$ de la matrice de $u + v$ est le vecteur des coordonnées de $\left( u + v \right)(e_{j})$ et donc c'est la somme des colonnes des matrices de $u$ et de $v$.
+Ainsi:
+\begin{equation*}
+	A + B = \begin{pmatrix}
+		A_{1, 1} & \cdots & A_{1, n}\\
+		\vdots & \ddots & \vdots\\
+		A_{m, 1} & \cdots & A_{m, n}
+	\end{pmatrix}
+	 +
+	 \begin{pmatrix}
+		 B_{1, 1} & \cdots & B_{1, n}\\
+		 \vdots & \ddots & \vdots\\
+		 B_{m, 1} & \cdots & B_{m, n}
+	 \end{pmatrix}
+	 =
+	 \begin{pmatrix}
+		 A_{1, 1} + B_{1, 1} & \cdots & A_{1, n} + B_{1, n}\\
+		 \vdots & \ddots & \vdots\\
+		 A_{m, 1} + B_{m, 1} & \cdots & A_{m, n} + B_{m, n}
+	 \end{pmatrix}
+\end{equation*}
+
 \section{Exemple des équations différentielles linéaires}
+\subsection{Ordre 1}
 
 \begin{définition}{Équation différentielle linéaire d'ordre 1}{}
 On appelle une équation linéaire d'ordre 1 toute équation de la forme
@@ -355,5 +387,10 @@ $$f(x) = \lambda$$
 où $\lambda$ est une constante: on a donc $y(x) = \lambda\mathrm{e}^{-h(x)}$
 \\\\
 On obtient donc que $S = \mathrm{Vect}(\mathrm{e}^{-h(x)})$ et que donc $S$ est de dimension 1: c'est une droite !
+
+\subsection{Cas Général}
+En fait, notre raisonnement est très général:
+Si on a une équation différentielle linéaire d'ordre $n$, donc de la forme $y^{(n)} + \sum_{i = 0}^{n - 1} a_{i}(x)y^{(i)} = 0$, l'espace des solutions est un espace de vectoriel de dimension $n$.
+Encore plus généralement, si $b \neq 0$ l'espace des solutions est un espace affine, c'est-à-dire que toute solution est de la forme $y_{0} + S$ où $S$ est l'espace des solutions pour $b = 0$ et $y_{0}$ est une solution particulière.
 
 \end{document}
