@@ -48,6 +48,10 @@ Un corps est un ensemble qui nous permet de faire des additions, soustractions, 
 	\end{itemize}
 \end{définition}
 
+\begin{example}
+	L'ensemble $\left( \N, +, 0 \right)$ n'est même pas un groupe, $\left( \Z, +, 0, \times, 1 \right)$ est un groupe abélien, et même un anneau, mais n'est pas un corps. $\left( \Q, +, \times, 0, 1 \right)$ est un corps (c'est le plus petit qui contient les entiers). $\R$ et $\C$ sont aussi des corps.
+\end{example}
+
 On appelle morphisme de groupe une fonction entre deux groupes qui transporte la loi et envoie le neutre sur le neutre. Un morphisme de corps préserve les deux lois, et envoie le neutre.
 
 \begin{remarque}{Corps Commutatif}{}
@@ -111,9 +115,10 @@ On vérifie aisément les propriétés demandées, mais surtout, on vérifie que
 
 \subsection{Autres exemples d'espaces vectoriels}
 
-\subsubsection{$\R^n$}
+\subsubsection{Les espaces euclidiens réels de dimension finie $\R^n$}
 
 On peut définir de même ce qu'on appelle "espace 3D" en géométrie euclidienne: $\R^3$ dont les vecteurs s'écrivent sous la forme $(x, y, z)$, et aller plus loin avec par exemple l'espace-temps $\R^4$ de vecteurs $(x, y, z, t)$ etc. On garde les mêmes lois que pour $\R^2$: on a $(x, y, z) + (x', y', z') = (x+x', y+y', z+z')$ et $\lambda(x, y, z) = (\lambda x, \lambda y, \lambda z)$.
+En fait, on ne fait simplement qu'additionner point à point.
 
 \begin{définition}{Espace Euclidiens Réels de Dimension Finie}{}
 	Plus généralement, si $n \in \N^{*}$, on définit une structure d'espace vectoriel sur $\R^{n}$ de la même manière que précédemment:
@@ -122,6 +127,8 @@ On peut définir de même ce qu'on appelle "espace 3D" en géométrie euclidienn
 		\item $\lambda \cdot \left( x_{1}, \ldots, x_{n} \right) = \left( \lambda \cdot x_{1}, \ldots, \lambda \cdot x_{n} \right)$.
 	\end{itemize}
 \end{définition}
+
+Vous remarquerez que rien dans notre définition n'est spécifique à $\R$, et qu'on peut définir de même les $\K^{n}$ pour $\K$ un autre corps.
 
 \subsubsection{Les fonctions réelles}
 
@@ -133,6 +140,10 @@ On appelle fonction réelle à valeurs réelles toute fonction qui a un réel as
 	On définit $f+g$ pour $f$ et $g$ des fonctions à valeurs réelles par la relation $(f+g)(x) = f(x)+g(x)$ et $\lambda f$ par $(\lambda f)(x) = \lambda f(x)$, autrement dit l'addition et la multiplication point à point.
 	On obtient que l'ensemble des fonctions réelles muni des deux opérations est un $\R$-espace vectoriel.
 \end{théorème}
+
+Notre définition d'espace vectoriel sur les fonctions ne dépend que de la structure de $\R$ comme espace vectoriel.
+On peut donc définir de même les $\K$-espaces vectoriels des applications de $X$ dans $E$ dès que $X$ est un ensemble et $E$ un $\K$-espace vectoriel.
+Notamment, on peut regarder $\R^{\N}$ (l'ensemble des suites à valeurs réelles), ou même $\R^{n}$ comme des espaces de fonctions, et nos définitions sont cohérentes.
 
 \subsection{Sous-espace vectoriel}
 
@@ -152,6 +163,24 @@ On va s'intéresser aux parties de $E$ qui profitent des propriétés géométri
 
 Un sous-espace vectoriel, c'est donc un espace vectoriel dans un espace vectoriel.
 
+\begin{example}
+	\begin{enumerate}
+		\item Dans $\R^{2}$ les sous-espaces vectoriels sont soit:
+			\begin{itemize}
+				\item $\R^{2}$ tout entier;
+				\item $\{0\}$ l'origine du repère;
+				\item Les droites passant par $O$.
+			\end{itemize}
+		\item Dans $\R^{3}$, les sous-espaces vectoriels sont où:
+			\begin{itemize}
+				\item $\R^{3}$ tout entier;
+				\item Les plans contenant $O$;
+				\item Les droites passant par $O$;
+				\item $\{0\}$ l'origine du repère.
+			\end{itemize}
+	\end{enumerate}
+\end{example}
+
 \section{Liberté, bases et dimension}
 \subsection{Espace Engendré}
 \begin{définition}{Famille}{}
@@ -164,6 +193,22 @@ Ceci nous permet de définir la portée/l'espace engendré d'une famille de vect
 \begin{définition}{Espace Vectoriel Engendré}{}
 	L'espace vectoriel engendré $\Vect_{\K}\left( x_{i} \right)$ par une famille $\left( x_{i}\right)_{i\in I}$ est le plus petit espace vectoriel qui contient tous les $x_{i}$.
 \end{définition}
+
+\begin{example}
+	On dit qu'une fonction $P: \R \to \R$ est un polynôme s'il existe des $\alpha_{i}$ et des $n_{i}$ pour $i \in \onen{k}$ tels que:
+	\begin{equation*}
+		P(x) = \alpha_{1}x^{n_{1}} + \cdots + \alpha_{k}x^{n_{k}}
+	\end{equation*}
+	On remarque (par exemple en considérant les limites des quotients $P(x)/x^{N}$ en $x \to +\infty$) que si tous les $n_{i}$ sont inférieurs à $N$ (on dit que $P$ est de degré au plus $N$), que deux tels polynômes $P$ et $Q$ ont leur somme de degré au plus $N$.
+	En particulier, l'espace des polynômes de degré au plus $n$ $\R_{n}[X]$ est un espace vectoriel, et notre définition équivaut à:
+	\begin{equation*}
+		\R_{n}[X] = \Vect_{\R}\left( 1, x, \ldots, x^{n} \right)
+	\end{equation*}
+	et on peut même étendre l'espace à tous les polynômes en écrivant:
+	\begin{equation*}
+		\R[X] = \Vect_{\R}\left( 1, x, \ldots, x^{n}, \ldots \right)
+	\end{equation*}
+\end{example}
 
 \begin{propositionfr}{Caractérisation des Espaces Engendrés}{}
 	Soit $\mathcal{V}\left( x_{i} \right)_{i\in I}$ l'ensemble des sous-espaces vectoriels de $E$ qui contiennent la famille $\left(x_{i}\right)_{i\in I}$.
@@ -178,6 +223,23 @@ Ceci nous permet de définir la portée/l'espace engendré d'une famille de vect
 	La seconde se déduit du fait que l'ensemble de droite est un sous-espace vectoriel de $E$ qui contient les $\left( x_{i} \right)$
 \end{proof}
 
+\begin{example}
+	On peut vérifier aisément que:
+	\begin{equation*}
+		\Vect_{\R}\left( \begin{pmatrix}
+			1\\0\\0
+		\end{pmatrix}, \begin{pmatrix}
+		0\\1\\0
+\end{pmatrix}\right) = \left\{ \lambda\begin{pmatrix}
+	1\\0\\0
+\end{pmatrix} + \mu\begin{pmatrix}
+0 \\ 1\\0
+\end{pmatrix} = \begin{pmatrix}
+\lambda \\ \mu \\0
+\end{pmatrix} \ \middle| \ \lambda, \mu \in \R\right\}
+	\end{equation*}
+\end{example}
+
 \subsection{Base et Dimension}
 \begin{définition}{Famille libre, génératrice, base}{}
 \begin{itemize}
@@ -188,7 +250,8 @@ Ceci nous permet de définir la portée/l'espace engendré d'une famille de vect
 \end{définition}
 
 \begin{example}
-Dans $\mathbb{R}^2$, $((1, 0),(0, 1))$ forme une base de $\mathbb{R}^2$: en effet, tout vecteur $(a, b)$ peut s'écrire sous la forme $a(1, 0) + b(0, 1)$ et si $(0, 0) = a(1, 0) + b(0, 1) = (a, b)$, alors on a nécessairement $a=b=0$
+Dans $\mathbb{R}^2$, $((1, 0),(0, 1))$ forme une base de $\mathbb{R}^2$: en effet, tout vecteur $(a, b)$ peut s'écrire sous la forme $a(1, 0) + b(0, 1)$ et si $(0, 0) = a(1, 0) + b(0, 1) = (a, b)$, alors on a nécessairement $a=b=0$.
+On appelle cette base la base canonique de $\R^{2}$.
 \end{example}
 
 En substance, à chaque vecteur de la famille, on associe un "axe" qui est l'ensemble des déplacements que l'on peut faire selon cet "axe" (en allant dans la direction du vecteur).
@@ -232,7 +295,7 @@ Maintenant que nous avons introduit les notions de vecteurs et de bases, essayon
 Le formalisme pertinent est celui d'application linéaire, des sortes de morphismes d'espaces vectoriels.
 
 \begin{définition}{Application linéaire}{}
-On considère deux espaces vectoriels $E$ et $F$.
+On considère deux espaces vectoriels $E$ et $F$ sur le même corps $\K$.
 On appelle application linéaire une fonction $u$ qui à un élément de $E$ associe un élément de $F$, et qui vérifie les propriétés suivantes:
 \begin{itemize}
 	\item Pour tous vecteurs $x$ et $y$ de $E$, $u(x+y) = u(x)+u(y)$
@@ -242,6 +305,17 @@ On note $L\left( E:F \right)$ l'ensemble des applications linéaires de $E$ dans
 \end{définition}
 
 Une application linéaire est un morphisme de groupe notés additivement qui préserve le produit externe, d'où la dénomination de morphisme d'espace vectoriel.
+
+\begin{remarque}{Application Semi-Linéaire}{}
+Les applications linéaires n'ont de sens que si $E$ et $F$ sont deux $\K$-espaces vectoriels.
+Le formalisme adapté est sinon celui d'application semi-linéaire: on introduit un isomorphisme de corps $\sigma$ entre $\K$ et $\K'$ et on demande que:
+\begin{equation*}
+	u\left( \lambda x + \mu y \right) = \sigma\left( \lambda \right)u(x) + \sigma\left( \mu \right)u(y), \forall \lambda, \mu \in \K, x, y \in E
+\end{equation*}
+L'étude des applications semi-linéaires (enfin plutôt de leur équivalent affine, c'est à dire à une translation (ou une constante) près) permet de classifier l'ensemble des bijections d'espaces affines préservant l'alignement, en considérant des automorphismes de corps (voir dans la définition \ref{def:morphismes}).
+Plus précisément, si $f: X \to X'$ est une bijection d'espaces affines, alors elle préserve les points si et seulement si elle est semi-linéaire, résultat parfois appelé théorème fondamental de la géométrie affine.\\
+Le seul automorphisme de $\R$ est l'identité. Les deux seuls de $\C$ sont l'identité et la conjugaison complexe.
+\end{remarque}
 
 \begin{propositionfr}{Opérations avec des applications linéaires}{}
 	On a
@@ -265,12 +339,6 @@ On utilise notre théorème précédent: on sait que $f(x) = -x$, $f(y) = -y$ ai
 Ensuite, on utilise notre théorème précédent: pour tout vecteur $u$, on a l'existence de scalaires tels que $u = \alpha x + \beta y + \gamma z$, et donc $f(u) = \alpha f(x) + \beta f(y) + \gamma f(z)$ ce qui donne donc $f(u) = -\alpha x - \beta y + \gamma z$
 \end{example}
 
-\begin{définition}{$*$morphisme}{}
-	Une application linéaire $u$ est appelée épimorphisme si elle est surjective, monomorphisme si elle est injective et isomorphisme si elle est bijective.
-	Elle est de plus appelée automorphisme si de plus elle va de $E$ dans $E$.
-	On dit que deux espaces sont isomorphes si et seulement si il y a un isomorphisme entre les deux.
-\end{définition}
-
 \begin{propositionfr}{Opérations sur les Applications Linéaires}{}
 	Si $u, v$ sont deux applications linéaires, $\lambda, \mu \in \K$, alors, $\lambda u + \lambda v$, définie point à point, est une application linéaire.
 \end{propositionfr}
@@ -278,8 +346,25 @@ Ensuite, on utilise notre théorème précédent: pour tout vecteur $u$, on a l'
 	On vérifie très facilement les axiomes.
 \end{proof}
 
+\begin{example}
+	Regardons ensemble quelques exemples d'applications linéaires:
+	\begin{enumerate}
+		\item Les homothéties, fonctions de la forme $h_{\lambda}: x \in E \mapsto \lambda x \in E$.
+		\item Comme nous venons de le voir, les rotations $s$ de l'espace (dont la définition demandent quelques notions supplémentaires d'orthogonalité, nous y reviendrons) sont des applications linéaires.
+		\item L'opérateur de dérivation $\Delta: f \in \mathcal{D}^{1} \mapsto f'$ est linéaire, comme vous l'avez vu en cours.
+		\item L'opérateur d'évaluation en $a \in X$, $\mathrm{eval}_{a}\left( f \right) = f(a)$ où $f: X \to E$ est linéaire.
+	\end{enumerate}
+\end{example}
+
+\begin{définition}{$*$morphisme}{morphismes}
+	Une application linéaire $u$ est appelée épimorphisme si elle est surjective, monomorphisme si elle est injective et isomorphisme si elle est bijective.
+	Elle est de plus appelée automorphisme si de plus elle va de $E$ dans $E$.
+	On dit que deux espaces sont isomorphes si et seulement si il y a un isomorphisme entre les deux.
+\end{définition}
+
+
 \subsection{Matrices}
-Commençons déjà par un théorème fondamental.
+Commençons déjà par un théorème fondamental qui explique, qu'en fait, une application linéaire peut se résumer par quelques nombres.
 
 \begin{théorème}{Identification d'applications linéaires}{isomorphisme}
 	Soient $E$ et $F$ deux espaces vectoriels, $(e_i)_{i\in I}$ une base de $E$ et $(f_i)_{i\in I}$ une famille de vecteurs de $F$. Il existe une unique application linéaire $u$ telle que, pour tout indice $i$, $u(e_{i}) = f_{i}$.
@@ -322,8 +407,10 @@ Le théorème précédent se reformule en: $u$ est injective si et seulement si 
 Dans la suite, on ne considèrera que des espaces de dimension finie.
 
 \begin{définition}{Matrice d'une Application Linéaire}{}
-	Si $u$ est une application linéaire de $E$ dans $F$, dont les familles $\B = \left(e_{j}\right)_{j\leq n}$ et $\B' = \left(f_{i}\right)_{i\leq m}$ sont des bases.
+	Soit $u$ est une application linéaire de $E$ dans $F$, dont les familles $\B = \left(e_{j}\right)_{j\leq n}$ et $\B' = \left(f_{i}\right)_{i\leq m}$ sont des bases.
+
 	On note, pour $j \leq n$, $u\left( e_{j} \right) = \sum_{j = 1}^{m}u_{i, j}f_{i}$ la décomposition de $u(e_{j})$ dans la base $\B'$.
+
 	On appelle matrice de $u$ entre les bases $\B$ et $\B'$ la suite double $\left( u_{i, j} \right)_{i \leq m, j\leq n}$ qu'on représente par:
 	\begin{equation*}
 		\Mat_{\B, \B'}\left( u \right) = \begin{pmatrix}
@@ -333,7 +420,26 @@ Dans la suite, on ne considèrera que des espaces de dimension finie.
 			u_{m, 1} & u_{m, 2} & \cdots & u_{m, n}
 		\end{pmatrix}
 	\end{equation*}
+	La matrice $\Mat_{\B, \B'}(u)$ a $m$ lignes et $n$ colonnes. On note $\M_{m, n}\left( \K \right)$ l'ensemble des matrices à $m$ lignes et $n$ colonnes à coefficients dans $\K$.
 \end{définition}
+
+\begin{example}
+	Par exemple, on peut montrer que si $u_{\alpha}$ est la rotation autour de l'axe $z$ dans le plan, sa matrice dans la base canonique de $\R^{2}$ est:
+	\begin{equation*}
+		\Mat_{\B, \B}\left( u_{\alpha} \right) = \begin{pmatrix}
+			\cos \alpha & -\sin \alpha\\
+			\sin \alpha & \cos \alpha
+		\end{pmatrix}
+	\end{equation*}
+	Dans la base canonique de $\R^{3}$ c'est:
+	\begin{equation*}
+		\Mat_{\B, \B}\left( u_{\alpha} \right) = \begin{pmatrix}
+			\cos \alpha & - \sin \alpha & 0\\
+			\sin \alpha & \cos \alpha & 0\\
+			0 & 0 & J
+		\end{pmatrix}
+	\end{equation*}
+\end{example}
 
 Le théorème \ref{thm:isomorphisme} décrit un isomorphisme entre les applications linéaires de $E$ dans $F$ et les familles de $m$ vecteurs appartenant à $F$.
 Ceci a pour corollaire immédiat le résultat suivant:
@@ -363,6 +469,27 @@ Ainsi:
 		 A_{m, 1} + B_{m, 1} & \cdots & A_{m, n} + B_{m, n}
 	 \end{pmatrix}
 \end{equation*}
+Par le même raisonnement sur les colonnes (qui sont en fait la \textit{vraie} représentation des images), on vérifie que:
+\begin{equation*}
+	\lambda A = \lambda \cdot \begin{pmatrix}
+		A_{1, 1} & \cdots & A_{1, n}\\
+		\vdots & \ddots & \vdots\\
+		A_{m, 1} & \cdots & A_{m, n}
+	\end{pmatrix}
+	= \begin{pmatrix}
+		\lambda A_{1, 1} & \cdots & \lambda A_{1, n}\\
+		\vdots & \ddots & \vdots \\
+		\lambda A_{m, 1} & \cdots & \lambda A_{m, n}
+	\end{pmatrix}
+\end{equation*}
+Ici la matrice $0_{m, n}$ est celle sont la suite double de description est constante égale à $0$, c'est à dire:
+\begin{equation*}
+	0_{m, n} = \begin{pmatrix}
+		0 & \cdots & 0\\
+		\vdots & \ddots & \vdots\\
+		0 & \cdots & 0
+	\end{pmatrix}
+\end{equation*}
 
 \section{Exemple des équations différentielles linéaires}
 \subsection{Ordre 1}
@@ -373,12 +500,18 @@ $$y' + a(x)y = b(x)$$
 où l'inconnue $y$ est une fonction dérivable sur $I$ ($I$ un intervalle), $a$ et $b$ sont des fonctions continues sur $I$.
 \end{définition}
 
-Ce type d'équations est très présent que ce soit en physique ou bien dans d'autres domaines des sciences. Mais on peut se demander: comment les résoudre ? On va se placer à présent dans le cas où $b=0$. On cherche donc à résoudre
-$$y' + a(x)y = 0$$.
+Ce type d'équations est très présent que ce soit en physique ou bien dans d'autres domaines des sciences.
+Mais on peut se demander: comment les résoudre?
+On va se placer à présent dans le cas où $b=0$.
+On cherche donc à résoudre
+\begin{equation*}
+y' + a(x)y = 0
+\end{equation*}
+On peut remarquer quelque chose: l'ensemble des solutions $S$ est un sous espace vectoriel de l'ensemble des fonctions réelles à valeurs réelles!
+En effet, l'application de dérivation $\Delta$ est linéaire, et l'application $f \mapsto \Delta\left( f \right) + a \times f$ l'est donc aussi et en particulier son noyau est un espace vectoriel.
 
-On peut remarquer quelque chose: l'ensemble des solutions $S$ est un sous espace vectoriel de l'ensemble des fonctions réelles à valeurs réelles !
-
-Mais donc comment trouver une solution ? On considère une fonction $f$ sous la forme $f(x) = g(x)\mathrm{e}^{h(x)}$. On a $f$ dérivable avec $f'(x) = g'(x)\mathrm{e}^{h(x)} + g(x)h'(x)\mathrm{e}^{h(x)} = (g'(x) + g(x)h'(x))\mathrm{e}^{h(x)}$.
+Mais donc comment trouver une solution?
+On considère une fonction $f$ sous la forme $f(x) = g(x)\mathrm{e}^{h(x)}$. On a $f$ dérivable avec $f'(x) = g'(x)\mathrm{e}^{h(x)} + g(x)h'(x)\mathrm{e}^{h(x)} = (g'(x) + g(x)h'(x))\mathrm{e}^{h(x)}$.
 
 Ici on peut voir que notre équation différentielle y ressemble en prenant $y = g$ et $h' = a$. On observe donc que
 $$f'(x) = (y'(x) + a(x)y(x))\mathrm{e}^{h(x)} = 0$$
