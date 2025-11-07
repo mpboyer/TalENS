@@ -219,22 +219,63 @@ un échantillon fini d'un ensemble réellement infini de données).
 
 \subsection{Zoologie de métriques}
 Dans cette partie on va regarder rapidement quelques métriques intéressantes sur des ensembles de points
-dans un espace vectoriel.
+dans un espace vectoriel $E$.
 Il faut toujours se souvenir que définir une métrique sur un espace vectoriel doit se faire en ayant en tête
 l'ensemble qui a été plongé dans l'espace vectoriel et ce que la métrique peut nous apprendre sur l'espace.
 
 \paragraph{Similarité angulaire}
 On va chercher à mesurer l'angle entre deux droites engendrées par $u$ et $v$.
-On a:
-\begin{proposition}
-
+\begin{proposition}[Inégalité de Cauchy-Schwarz]
+	Si $u, v$ sont des éléments d'un espace euclidien alors:
+	\begin{equation*}
+		\abs{\scalar{u, v}} \leq \norm{u}\norm{v}
+	\end{equation*}
+	avec égalité si et seulement si $u = \lambda v$ avec $\lambda \geq 0$.
 \end{proposition}
+
+En particulier cela signifie que
+\begin{equation*}
+	\frac{\scalar{u, v}}{\norm{u}\norm{v}} \in [-1, 1]
+\end{equation*}
+et donc que $\arccos\left(\frac{\scalar{u, v}}{\norm{u}\norm{v}}\right)$ est bien une mesure d'angle entre les deux droites.
+
+\paragraph{Norme L-p}
+\begin{definition}
+	Si $p \geq 1$ et $x \in E$.
+	\begin{equation*}
+		\norm{x}_{p} = \sqrt[p]{\sum x_{i}^{p}}
+	\end{equation*}
+\end{definition}
+
+Pour tout $p$, on obtient une distance entre nos points, par $d_{p}(x, y) = \norm{x - y}_{p}$.
+
+\paragraph{Probability Differences}
 
 \section{Algorithmes sur les immersions}
 \subsection{PCA}
+Le but de l'algorithme PCA est de trouver une meilleure base de l'espace pour représenter nos données.
+Pour ce faire on va construire une base dont chacune des composantes augmente le plus possible l'espace
+précédent.
+Ceci nous permet d'ailleurs de construire un espace de plongement de plus faible dimension, au coût de la
+signification des caractéristiques.
 % Projection
+\begin{algorithmic}
+	\Procedure{PCA}{n, X}
+	\For{$i = 1 \to n$}
+	\State{$u_{i} \gets \argmin_{u \in \Vect(u_{j})_{j < i}^{\bot}} \sum_{x \in X}\scalar{x, u} $}
+	\EndFor
+	\EndProcedure
+\end{algorithmic}
+
+PCA est facile à implémenter et préserve la variance globale des données, en restant linéaire et peu
+coûteux mais fonctionne assez mal dans le cas où les données ne sont pas du tout linéaire.
 
 \subsection{t-SNE}
-
+Pour t-SNE, l'algorithme est plus complexe et moins interprétable, mais préserve la similitude locale
+de l'ensemble.
+On plonge les données dans un ensemble de probabilités conditionnels représentant des similitudes pour une distribution gaussienne.
+On peut ensuite mesurer la différence entre une distribution apprise (en $2$ ou $3$ dimensions) et cette distribution, par la divergence de Kullback-Leibler.
+La divergence de Kullback-Leibler est simplement une mesure de la probabilité que deux distributions de
+probabilité soit fortement différentes.
 
 \end{document}
