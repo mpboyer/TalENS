@@ -223,7 +223,7 @@ dans un espace vectoriel $E$.
 Il faut toujours se souvenir que définir une métrique sur un espace vectoriel doit se faire en ayant en tête
 l'ensemble qui a été plongé dans l'espace vectoriel et ce que la métrique peut nous apprendre sur l'espace.
 
-\paragraph{Similarité angulaire}
+\subsubsection{Similarité angulaire}
 On va chercher à mesurer l'angle entre deux droites engendrées par $u$ et $v$.
 \begin{proposition}[Inégalité de Cauchy-Schwarz]
 	Si $u, v$ sont des éléments d'un espace euclidien alors:
@@ -239,7 +239,7 @@ En particulier cela signifie que
 \end{equation*}
 et donc que $\arccos\left(\frac{\scalar{u, v}}{\norm{u}\norm{v}}\right)$ est bien une mesure d'angle entre les deux droites.
 
-\paragraph{Norme L-p}
+\subsubsection{Norme L-p}
 \begin{definition}
 	Si $p \geq 1$ et $x \in E$.
 	\begin{equation*}
@@ -248,8 +248,12 @@ et donc que $\arccos\left(\frac{\scalar{u, v}}{\norm{u}\norm{v}}\right)$ est bie
 \end{definition}
 
 Pour tout $p$, on obtient une distance entre nos points, par $d_{p}(x, y) = \norm{x - y}_{p}$.
+Pour $p = \infty$ on pose $\ninf{x} = \max{\abs{x_{i}}}$.
 
-\paragraph{Probability Differences}
+\subsubsection{Représentation fréquentielle}
+En divisant $x$ par la somme des $x_{i}$, on construit une distribution de probabilité à partir de $x$.
+Ceci nous permet d'utiliser tout un tas de métriques sur l'ensemble des distributions de probabilité,
+notamment les distances de Wasserstein, la divergence de Kullback-Leibler ou la métrique de Fisher-Rao.
 
 \section{Algorithmes sur les immersions}
 \subsection{PCA}

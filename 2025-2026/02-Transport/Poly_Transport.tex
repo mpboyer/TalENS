@@ -1,0 +1,74 @@
+\documentclass[info, math]{mpb-cours}
+
+\title{Transport Optimal et Architecture}
+\author{Matthieu Boyer}
+\date{Cours TalENS 2 2025-2026}
+
+\def\X{\mathcal{X}}
+
+\begin{document}
+\bettertitle
+
+Ce polycopié ne doit pas être vu comme un remplacement au cours, mais simplement comme un résumé du contenu qui permet d'être sûr de ne rien manquer.
+
+\section{Problème de Monge}
+Gaspard Monge, ingénieur militaire de Napoléon, est chargé par ce dernier du problème suivant:
+\begin{center}
+	Étant donné des grognards portant des sacs de sable depuis $n$ camps, quelle est la manière optimale de
+	construire $n$ murs à des endroits différents, sachant que les endroits sont à des distances plus ou
+	moins grandes de chaque camp~?
+\end{center}
+Ce problème fait partie de la grande classe des problèmes d'optimisation, et est fondamental en théorie des
+probabilités, puisqu'il est à la base de la théorie du transport optimal qui donne des manières de trouver
+des distributions de probabilités "moyennes".
+
+\subsection{Bases de Probabilités}
+On ne rentrera pas ici dans les "vraies" bases de la théorie de la mesure, et notamment sur la notion de tribu.
+
+\begin{definition}
+	Une mesure sur un espace $\X$ muni d'une tribu ensemble $\Sigma$ de parties de $X$ est une application
+	$\mu: \Sigma \to \R$ telle que:
+	\begin{itemize}
+		\item $\mu(\emptyset) = 0$
+		\item $\mu(A \cup B) = \mu(A) + \mu(B) - \mu(A \cap B)$
+		\item $\mu\left(\bigcup_{i = 0}^{\infty} A_{i}\right) = \sum_{i = 0}^{\infty} \mu(A_{i})$ si les $A_{i}$ sont deux
+		      à deux disjoints
+		\item $A \subseteq B \Rightarrow \mu(A) \leq \mu(B)$.
+	\end{itemize}
+	On dit que $\mu(\X)$ est la masse totale de $\mu$.
+\end{definition}
+
+Dans notre cas, on s'intéressera principalement aux cas $\abs{\X} \hookrightarrow \N$ et $X = \R^{d}$.
+\begin{definition}
+	Sur $\X$ au plus dénombrable, on a une mesure dite de comptage qui a chaque partie de $X$ associe son nombre d'éléments.
+
+	Sur $\X = \R^{d}$ on a une mesure $\lambda$ dite mesure de Lebesgue qui à chaque partie de $X$ associe son volume.
+	En particulier, $\lambda\left(\prod_{i} \left[a_{i}, b_{i}\right]\right) = \prod_{i} \abs{b_{i} - a_{i}}$.
+\end{definition}
+
+\begin{definition}
+	Une mesure de probabilité est une mesure positive de masse $1$.
+	Une mesure $\mu$ a densité par rapport à la mesure de Lebesgue s'il existe une fonction $p$ telle que
+	\begin{equation*}
+		\mu(A) = \int_{A} p(x)\d\lambda(x)
+	\end{equation*}
+\end{definition}
+Le symbole intégrale $\int$ signifie ici que pour tout point $x$ dans $A$, on construit un petit pavé autour
+de $A$, qu'on calcule son volume $\d\lambda(x)$ et qu'on le multiplie par la densité de $\mu$ en $x$ $p(x)$.
+
+Autrement dit, dans le volume $\d\lambda(x)$ autour de $x$, il y a $p(x)$ particules. On trouve donc le
+nombre total de particules dans $A$ en sommant les nombres de particules autour de tout point $x$ de $A$.
+
+\begin{definition}
+	Pour $x \in \R^{d}$, on définit le dirac en $x$ comme la mesure de probabilité $\delta_{x}$ qui vaut $1$ sur $\{x\}$ et $0$ ailleurs.
+
+	Pour $\mu \in \R^{d}, \Sigma \in \M_{d, d}(\R)$, on définit la gaussienne centrée en $\mu$ de covariance
+	$\Sigma$ par sa densité $p(x) = \exp\left(-\frac{1}{2}\Sigma^{-1}\left(x - \mu\right)^{2}\right)$.
+\end{definition}
+
+\begin{definition}
+	Une variable aléatoire $X$ à valeurs dans $E$ est une fonction dite mesurable de $\X$ dans $E$.
+	La probabilité que $X$ soit à valeurs dans $A \subseteq E$ est la mesure $\mu(X^{-1}(A))$.
+\end{definition}
+
+\end{document}
