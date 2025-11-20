@@ -5,6 +5,7 @@
 \date{Cours TalENS 2 2025-2026}
 
 \def\X{\mathcal{X}}
+\def\Y{\mathcal{Y}}
 
 \begin{document}
 \bettertitle
@@ -37,6 +38,7 @@ On ne rentrera pas ici dans les "vraies" bases de la théorie de la mesure, et n
 	\end{itemize}
 	On dit que $\mu(\X)$ est la masse totale de $\mu$.
 \end{definition}
+Intuitivement, une mesure est une application qui donne la quantité d'éléments dans une partie d'un espace.
 
 Dans notre cas, on s'intéressera principalement aux cas $\abs{\X} \hookrightarrow \N$ et $X = \R^{d}$.
 \begin{definition}
@@ -70,5 +72,119 @@ nombre total de particules dans $A$ en sommant les nombres de particules autour 
 	Une variable aléatoire $X$ à valeurs dans $E$ est une fonction dite mesurable de $\X$ dans $E$.
 	La probabilité que $X$ soit à valeurs dans $A \subseteq E$ est la mesure $\mu(X^{-1}(A))$.
 \end{definition}
+
+Autrement dit, c'est la quantité (au sens de $\mu$) d'antécédents des éléments de $A$ dans par $X$.
+
+\subsection{Formulation de Monge}
+On considère dans la suite deux mesures de probabilité $\alpha \in \mP(\X), \beta \in \mP(\Y)$.
+\begin{definition}
+	Pour $T: \X \to \Y$, on définit la mesure $T_{\sharp}\alpha$ par $T_{\sharp}\alpha(B) = \alpha(T^{-1}(B))$.
+\end{definition}
+Autrement dit, $T_{\sharp}\alpha(B)$ est la quantité (selon $\alpha$) d'antécédents des éléments de $B$ par
+$T$.
+
+\smallskip
+
+La formulation de Monge du problème de transport optimal de $\alpha$ à $\beta$ est la suivante:
+\begin{definition}
+	Soit $c$ une fonction de coût de $\X$ à $\Y$, c'est-à-dire une fonction positive de $\X$ dans $\Y$.
+	Le problème de Monge associé à $\alpha, \beta, c$ est de calculer:
+	\begin{equation}
+		M = \inf_{T: \X \to \Y} \left\{\int c(x, T(x))\d\alpha(x) \suchthat T_{\sharp}\alpha = \beta\right\}
+	\end{equation}
+\end{definition}
+$M$ représente la manière optimale de déplacer tout le poids de $\alpha$ vers $\beta$, sachant le coût du
+déplacement d'un point de $\X$ vers un point de $\Y$.
+
+\begin{definition}
+	Pour $c = \norm{\cdot}$ une norme, on définit la $p$-distance de Wasserstein associée à $c$ comme
+	\begin{equation*}
+		W_{p}(\alpha, \beta) = \inf_{T_{\sharp}\alpha = \beta}\sqrt[p]{\int \norm{x - T(x)}^{p}\d \alpha(x)}.
+	\end{equation*}
+\end{definition}
+
+\section{Calcul et Applications}
+\subsection{Calcul Discret}
+Dans le cas, plus simple, où $\alpha = \sum_{i = 1}^{N} a_{i}\delta_{x_{i}}$ et
+$\beta = \sum_{j = 1}^{N} b_{j}\delta_{y_{j}}$, les applications $T$ telles que $T_{\sharp}\alpha = \beta$
+correspondent à des assignations des $x_{i}$ aux $y_{j}$, c'est à dire une permutation $\sigma$ de
+l'ensemble $\onen{N}$ telle que $T(x_{i}) = y_{\sigma(i)}$.
+
+Le problème d'optimisation qui correspond au transport optimal dans ce cas est le problème de couplage
+sur un graphe biparti complet:
+
+\begin{definition}
+	Un graphe biparti complet est constitué d'un ensemble $V = A \sqcup B$ de \emph{sommets} composé de deux
+	parties $A$ et $B$ de tailles égales $n$.
+	Pour chaque sommet de $A$ on ajoute une \emph{arête} à tout sommet de $B$ avec des poids associés
+	au coût entre les	deux sommets.
+	Un couplage sur un graphe biparti est le choix de $n$ arêtes qui touchent tout sommet de $A$ et tout
+	sommet de $B$.
+\end{definition}
+
+Dans l'Algorithme \ref{alg:hung} on présente un pseudo-code pour l'algorithme hongrois qui permet de
+résoudre ce problème.
+L'idée de base étant de se ramener à chaque itération à un problème plus simple: une fois qu'un sommet est
+assigné, on le "supprime" virtuellement de la matrice de coût puis on recommence jusqu'à avoir terminé.
+Cet algorithme est dit \emph{glouton} parce qu'il effectue à tout instant l'assignation la plus efficace.
+
+Cet algorithme est assez efficace, pusiqu'il effectue un nombre d'opérations dit $\O(n^{3})$
+(lire \og grand O de $n^{3}$ \fg), qui est de l'ordre de $n^{3}$ et plus mathématiquement, il existe une
+constante positive $C$ telle que le nombre d'opérations $f(n)$ en fonction de $n$ vérifie $f(n) \leq n^{3}$.
+
+\begin{algorithm}
+	\caption{Algorithme Hongrois pour le problème d'assignation bipartite}
+	\label{alg:hung}
+	\begin{algorithmic}
+		\Procedure{MaxZ}{$C$} \Comment{Input: Cost matrix $C$ of size $t \times t$}
+		\State $Z \gets \{\}$
+		\While{$0 \in C_{i,j}$, $\forall(i,j) \notin Z$}
+		\State $x \gets$ row such that $C_{x,y}$ has the fewest marked $0$ elements
+		\State $y \gets$ column such that $C_{x,y} = 0$ and $C_{y}$ has the fewest marked $0$ elements
+		\State Add $(x,y)$ to set $Z$
+		\State Mark $C_{x,y}$ as an independent zero
+		\EndWhile
+		\Statex
+		\Return{Set $Z$ containing independent zeros}
+		\EndProcedure
+		\Statex
+		\Procedure{MinCover}{$C, Z$} \Comment{Input: Cost matrix $C$ and set $Z$}
+		\State $coveredRows \gets \{\}$ \Comment{Rows covered with horizontal lines}
+		\State $coveredCols \gets \{\}$ \Comment{Columns covered with vertical lines}
+		\While{$C_{i,j} = 0$ and $i \notin coveredRows$}
+		\If{$0 \in C_i$ and $i \in Z$}
+		\State $coveredRows \gets i$ \Comment{Cover row $i$}
+		\EndIf
+		\If{$C_{i,j} = 0$ and $i \notin coveredRows$}
+		\State $coveredCols \gets j$ \Comment{Cover column $j$}
+		\EndIf
+		\EndWhile
+		\Statex
+		\Return{$coveredRows, coveredCols$}
+		\EndProcedure
+		\Statex
+		\Procedure{Hungarian}{$C$} \Comment{Input: Cost matrix $C$ of size $t \times t$}
+		\For{every row $i$ and column $j$ in $C$}
+		\State $C_i \gets C_i - \min(C_i)$ \Comment{Subtract row minimum}
+		\State $C_j \gets C_j - \min(C_j)$ \Comment{Subtract column minimum}
+		\EndFor
+		\State $Z \gets$ \Call{MaxZ}{$C$}
+		\State $cx, cy \gets$ \Call{MinCover}{$C, Z$}
+		\While{$\text{len}(cx) + \text{len}(cy) < n$}
+		\State $minVal \gets \min(C_{ij})$ such that $i \notin cx$ and $j \notin cy$
+		\For{every row $i \notin cx$ and column $j \notin cy$}
+		\State $C_{ij} \gets C_{ij} - minVal$
+		\EndFor
+		\State $Z \gets$ \Call{MaxZ}{$C$}
+		\State $cx, cy \gets$ \Call{MinCover}{$C, Z$}
+		\EndWhile
+		\Statex
+		\Return{Set $Z$ containing index $(i, j)$ of assignments}
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+\subsection{Applications du Transport Optimal}
+
 
 \end{document}
